@@ -7,6 +7,6 @@ const project = {
 }
 
 ReactDOM.render(
-  <App setup={setup}/>,
+  <App />,
   document.getElementById('root')
 )
