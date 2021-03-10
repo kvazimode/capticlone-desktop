@@ -8,7 +8,7 @@ export default () => {
             <button className="button-element button-element--highlight">По</button>
             <button className="button-element button-element--image">Из</button>
             <button className="button-element button-element--rect">Пр</button>
-            <label for="mouse-checkbox">Мышь</label>
+            <label htmlFor="mouse-checkbox">Мышь</label>
             <input type="checkbox" className="checkbox-mouse" id="mouse-checkbox"></input>
         </div>
     )

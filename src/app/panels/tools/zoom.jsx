@@ -4,7 +4,7 @@ export default () => {
     return (
         <div className="block tools-block">
             <button className="button-zoom button-zoom-in">+</button>
-            <span class="value value-zoom">100</span>
+            <span className="value value-zoom">100</span>
             <button className="button-zoom button-zoom-out">-</button>
             <select defaultValue={'DEFAULT'}>
                 <option value="DEFAULT">100</option>

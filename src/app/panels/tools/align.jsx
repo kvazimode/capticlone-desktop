@@ -3,7 +3,7 @@ import React from 'react'
 export default () => {
     return (
         <div className="block tools-block">
-            <label for="select-relative">Относительно: </label>
+            <label htmlFor="select-relative">Относительно: </label>
             <select id="select-relative" defaultValue={"DEFAULT"}>
                 <option value="DEFAULT">Слайд</option>
                 <option>Последний выделенный</option>
