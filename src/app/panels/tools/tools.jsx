@@ -8,7 +8,6 @@ import Align from './align.jsx'
 export default () => {
   return <React.Fragment>
     <div className="panel panel-tools">
-      tools
       <Project />
       <Zoom />
       <Element />
