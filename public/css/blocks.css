@@ -3,3 +3,10 @@
     margin: 5px;
     border: 2px dashed green;
 }
+
+.slides-block {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+}
