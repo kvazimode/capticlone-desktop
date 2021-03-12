@@ -17,3 +17,8 @@
 .button-align {
     margin: 0 3px;
 }
+
+.button-slides {
+    margin: 3px;
+    padding: 0;
+}
