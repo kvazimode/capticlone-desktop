@@ -3,9 +3,9 @@ import React from 'react'
 export default () => {
     return (
         <div className="block tools-block">
-            <button className="button-zoom button-zoom-in">+</button>
+            <button className="button-tools button-zoom-in">+</button>
             <span className="value value-zoom">100</span>
-            <button className="button-zoom button-zoom-out">-</button>
+            <button className="button-tools button-zoom-out">-</button>
             <select defaultValue={'DEFAULT'}>
                 <option value="DEFAULT">100</option>
                 <option>50</option>
