@@ -1,9 +1,10 @@
 import React from 'react'
+import Basic from './basic.jsx'
 
-export default () => {
-  return <React.Fragment>
+export default function Params() {
+  return (
     <div className="panel panel-params">
-      params
+      <Basic />
     </div>
-  </React.Fragment>
+  )
 }
