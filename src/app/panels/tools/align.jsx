@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default () => {
+export default function Align() {
     return (
         <div className="block tools-block">
             <label htmlFor="select-relative">Относительно: </label>

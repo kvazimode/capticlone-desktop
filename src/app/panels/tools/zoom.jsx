@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default () => {
+export default function Zoom() {
     return (
         <div className="block tools-block">
             <button className="button-tools button-zoom-in">+</button>

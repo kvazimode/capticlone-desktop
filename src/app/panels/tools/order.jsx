@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default () => {
+export default function Order() {
     return (
         <div className="block tools-block">
             <button className="button-tools button-order--down">Ниже</button>

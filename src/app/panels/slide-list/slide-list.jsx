@@ -13,12 +13,12 @@ const slides = [
   }
 ]
 
-export default () => {
-  return <React.Fragment>
+export default function SlideList() {
+  return (
     <div className="panel panel-slidelist">
       slides
       <Controls />
       <Slides slides={slides} />
     </div>
-  </React.Fragment>
+  )
 }

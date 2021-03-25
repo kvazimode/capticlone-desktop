@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default () => {
+export default function Controls() {
     return (
         <div className="block slides-block">
             <button className="button-slides button-slides--add">До</button>

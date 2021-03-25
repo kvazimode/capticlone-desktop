@@ -8,15 +8,14 @@ import Canvas from './canvas/canvas.jsx'
 class App extends PureComponent {
     render() {
         const {props} = this.props
-        return <React.Fragment>
+        return <>
             <Tools />
             <Canvas />
             <SlideList />
             <Timeline />
             <Params />
-        </React.Fragment>
+        </>
     }
-    
 }
 
 export default App

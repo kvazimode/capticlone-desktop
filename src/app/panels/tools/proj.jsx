@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default () => {
+export default function Project() {
     return (
         <div className="block tools-block">
             <select defaultValue={'DEFAULT'}>

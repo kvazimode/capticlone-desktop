@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default () => {
+export default function Element() {
     return (
         <div className="block tools-block">
             <button className="button-tools button-element--simple">ПТ</button>

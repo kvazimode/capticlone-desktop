@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default () => {
-  return <React.Fragment>
+export default function Timeline() {
+  return (
     <div className="panel panel-timeline">
       timeline
     </div>
-  </React.Fragment>
+  )
 }

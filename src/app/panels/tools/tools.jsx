@@ -5,8 +5,8 @@ import Element from './element.jsx'
 import Order from './order.jsx'
 import Align from './align.jsx'
 
-export default () => {
-  return <React.Fragment>
+export default function Tools() {
+  return (
     <div className="panel panel-tools">
       <Project />
       <Zoom />
@@ -14,6 +14,6 @@ export default () => {
       <Order />
       <Align />
     </div>
-  </React.Fragment>
+  )
 }
 

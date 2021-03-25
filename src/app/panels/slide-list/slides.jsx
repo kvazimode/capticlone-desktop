@@ -1,8 +1,7 @@
 import React from 'react'
 import Slide from './slide.jsx'
 
-export default (props) => {
-    
+export default function Slides(props) {
     return (
         <div className="block slides-block slides-block--list">
             {props.slides.map((slide, count) => 

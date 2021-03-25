@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default (props) => {
+export default function Slide(props) {
     return (
         <div className="slide">
             <span className="slide-name">{props.count + 1}. {props.slide.name}</span>
