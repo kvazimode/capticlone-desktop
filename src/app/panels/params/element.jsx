@@ -3,6 +3,7 @@ import SimpleText from './element/simple-text.jsx'
 import Slide from './element/slide.jsx'
 import Img from './element/image.jsx'
 import Rect from './element/rect.jsx'
+import TextBlock from './element/text-block.jsx'
 
 const bgList = [
     `bgName1.png`,
@@ -30,6 +31,8 @@ export default function Element(props) {
         case `image`:
             return <Img imgList={imgList}/>;
         case `rect`:
-            return <Rect />
+            return <Rect />;
+        case `text-block`:
+            return <TextBlock />
     }
 }

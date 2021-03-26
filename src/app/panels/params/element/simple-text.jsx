@@ -4,7 +4,7 @@ export default function SimpleText() {
     return (
         <fieldset>
             <legend>Простой текст</legend>
-            <label htmlFor="simple-text-name">Начало: </label>
+            <label htmlFor="simple-text-name">Имя: </label>
             <input id="simple-text-name" className="param-field param-field--text" type="text" defaultValue="simpletext1"></input>
             <label htmlFor="select-font">Шрифт: </label>
             <select id="select-font" defaultValue={"DEFAULT"}>
