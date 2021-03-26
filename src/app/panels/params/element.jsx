@@ -2,6 +2,7 @@ import React from 'react'
 import SimpleText from './element/simple-text.jsx'
 import Slide from './element/slide.jsx'
 import Img from './element/image.jsx'
+import Rect from './element/rect.jsx'
 
 const bgList = [
     `bgName1.png`,
@@ -27,6 +28,8 @@ export default function Element(props) {
         case `slide`:
             return <Slide bgList={bgList}/>;
         case `image`:
-            return <Img imgList={imgList}/>
+            return <Img imgList={imgList}/>;
+        case `rect`:
+            return <Rect />
     }
 }

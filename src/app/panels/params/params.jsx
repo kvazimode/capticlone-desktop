@@ -6,7 +6,8 @@ const type =
 // `simple-text`
 // `block`
 // `slide`
-`image`
+// `image`
+`rect`
 
 export default function Params() {
   return (
