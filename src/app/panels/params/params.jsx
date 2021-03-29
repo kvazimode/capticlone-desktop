@@ -8,7 +8,8 @@ const type =
 // `slide`
 // `image`
 // `rect`
-`text-block`
+// `text-block`
+`highlight`
 
 export default function Params() {
   return (
