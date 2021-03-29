@@ -5,6 +5,7 @@ import Img from './element/image.jsx'
 import Rect from './element/rect.jsx'
 import TextBlock from './element/text-block.jsx'
 import Highlight from './element/highlight.jsx'
+import Mouse from './element/mouse.jsx'
 
 const bgList = [
     `bgName1.png`,
@@ -37,5 +38,7 @@ export default function Element(props) {
             return <TextBlock />;
         case `highlight`:
             return <Highlight />
+        case `mouse`:
+            return <Mouse />
     }
 }

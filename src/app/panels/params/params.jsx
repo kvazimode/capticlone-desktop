@@ -9,7 +9,8 @@ const type =
 // `image`
 // `rect`
 // `text-block`
-`highlight`
+// `highlight`
+`mouse`
 
 export default function Params() {
   return (
