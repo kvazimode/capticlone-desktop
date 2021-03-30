@@ -1,9 +1,9 @@
 import React from 'react'
 
 export default function Canvas() {
-  return (
+  return <>
     <div className="panel panel-canvas">
-      canvas
+      <canvas className="canvas" width="1280" height="720"></canvas>
     </div>
-  )
+    </>
 }
