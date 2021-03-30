@@ -5,10 +5,6 @@ import Tabs from './panels/params/tabs.jsx'
 import SlideList from './panels/slide-list/slide-list.jsx'
 import Canvas from './canvas/canvas.jsx'
 
-const tab = 
-// `params`
-`library`
-
 const bgList = [
     `bgName1.png`,
     `bgName2.png`,
@@ -33,7 +29,7 @@ class App extends PureComponent {
             <Canvas />
             <SlideList />
             <Timeline />
-            <Tabs tab={tab} bgList={bgList} imgList={imgList} />
+            <Tabs bgList={bgList} imgList={imgList} />
         </>
     }
 }
