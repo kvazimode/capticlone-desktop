@@ -6,13 +6,16 @@ const type =
 // `simple-text`
 // `block`
 // `slide`
-`image`
+// `image`
+// `rect`
+`text-block`
+// `highlight`
+// `mouse`
 
-export default function Params() {
-  return (
-    <div className="panel panel-params">
+export default function Params(props) {
+  const {imgList, bgList} = props
+  return <>
       <Basic />
-      <Element type={type} />
-    </div>
-  )
+      <Element type={type} imgList={imgList} bgList={bgList} />
+      </>
 }
