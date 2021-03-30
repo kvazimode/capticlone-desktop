@@ -18,7 +18,7 @@ class Tabs extends React.PureComponent {
 
     render() {
         return (
-            <div className="panel-tabs">
+            <div className="panel panel-tabs">
                 <button className="params" onClick={(e) => (this.handleTabSelect(e.target.className))}>Параметры</button>
                 <button className="library" onClick={(e) => (this.handleTabSelect(e.target.className))}>Библиотека</button>
                 <Tab tab={this.state.tab} imgList={this.props.imgList} bgList={this.props.bgList} />

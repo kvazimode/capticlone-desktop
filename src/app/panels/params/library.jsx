@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Library(props) {
     const {imgList, bgList} = props
-    return <div className="panel panel-library">
+    return <>
         <details>
             <summary>Изображения</summary>
             <ul>
@@ -19,5 +19,5 @@ export default function Library(props) {
                 })}
             </ul>
         </details>
-    </div>
+    </>
 }
