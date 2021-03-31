@@ -1,9 +1,20 @@
-.header {
+.header, .timeline-element {
     display: flex;
     height: 20px;
     border-bottom: 2px solid gray;
 }
 
-.header-name {
+.header-name, .element-name {
     width: 150px;
+}
+
+.element-time {
+    border-left: 2px solid gray;
+}
+
+.time-block {
+    display: block;
+    height: 20px;
+    border: none;
+    background-color: orange;
 }
