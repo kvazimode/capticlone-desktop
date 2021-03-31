@@ -2,7 +2,8 @@ import React from 'react'
 
 export default function Align() {
     return (
-        <div className="block tools-block">
+        <fieldset>
+            <legend>Выравнивание</legend>
             <label htmlFor="select-relative">Относительно: </label>
             <select id="select-relative" defaultValue={"DEFAULT"}>
                 <option value="DEFAULT">Слайд</option>
@@ -14,6 +15,6 @@ export default function Align() {
             <button className="button-tools button-align--top">Наверх</button>
             <button className="button-tools button-align--center">По центру</button>
             <button className="button-tools button-align--bottom">Вниз</button>
-        </div>
+        </fieldset>
     )
 }
