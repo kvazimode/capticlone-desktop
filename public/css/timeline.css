@@ -1,0 +1,9 @@
+.header {
+    display: flex;
+    height: 20px;
+    border-bottom: 1px solid gray;
+}
+
+.header-name {
+    width: 150px;
+}

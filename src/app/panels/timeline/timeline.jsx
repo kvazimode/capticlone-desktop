@@ -1,11 +1,10 @@
 import React from 'react'
-import Ruler from './ruler.jsx'
+import Header from './header/header.jsx'
 
 export default function Timeline() {
   return (
     <div className="panel panel-timeline">
-      timeline
-      <Ruler />
+      <Header />
     </div>
   )
 }
