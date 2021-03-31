@@ -16,7 +16,6 @@ const slides = [
 export default function SlideList() {
   return (
     <div className="panel panel-slidelist">
-      slides
       <Controls />
       <Slides slides={slides} />
     </div>
