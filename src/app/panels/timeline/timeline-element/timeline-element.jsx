@@ -7,8 +7,8 @@ export default function TimelineElement(props) {
         
         <div className="element-time">
             <div className="time-block" style={{ 
-                marginLeft: props.start / 10,
-                width: props.duration / 10  
+                marginLeft: props.start / 20,
+                width: props.duration / 20  
             }}></div>
         </div>
     </div>
