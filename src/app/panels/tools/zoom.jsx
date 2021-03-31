@@ -2,7 +2,8 @@ import React from 'react'
 
 export default function Zoom() {
     return (
-        <div className="block tools-block">
+        <fieldset>
+            <legend>Масштаб</legend>
             <button className="button-tools button-zoom-in">+</button>
             <span className="value value-zoom">100</span>
             <button className="button-tools button-zoom-out">-</button>
@@ -14,6 +15,6 @@ export default function Zoom() {
                 <option>200</option>
                 <option>400</option>
             </select>
-        </div>
+        </fieldset>
     )
 }
