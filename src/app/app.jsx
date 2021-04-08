@@ -23,10 +23,14 @@ class App extends PureComponent {
         this.setState({currentSlideID: id})
     }
 
+    _currentSlide() {
+        return this.slides.find(x => x.id == this.state.currentSlideID)
+    }
+
     render() {
         return <>
             <Tools />
-            <Canvas />
+            <Canvas bgImg={this._currentSlide().bgImg}/>
             <SlideList
                 slides={this.slides}
                 currentSlideID={this.state.currentSlideID}
