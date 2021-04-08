@@ -3,7 +3,7 @@ export default {
     slides: [
         {
             id: 0,
-            name: `slide 001`,
+            name: `Slide 001`,
             order: 0,
             bgImg: `bgName1.png`,
             elements: [
@@ -45,7 +45,7 @@ export default {
         {
             id: 1,
             name: `Slide 002`,
-            order: 2,
+            order: 1,
             bgImg: `bgName2.png`,
             elements: [
                 {

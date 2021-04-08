@@ -2,22 +2,14 @@ import React from 'react'
 import Controls from './controls.jsx'
 import Slides from './slides.jsx'
 
-const slides = [
-  {
-    name: `Slide 001`,
-    bg: `bgName1.png`
-  },
-  {
-    name: `Slide 002`,
-    bg: `bgName2.png`
-  }
-]
-
-export default function SlideList() {
+export default function SlideList(props) {
   return (
     <div className="panel panel-slidelist">
       <Controls />
-      <Slides slides={slides} />
+      <Slides
+        slides={props.slides}
+        currentSlideID={props.currentSlideID}
+        slideNameClickHandler={props.slideNameClickHandler}/>
     </div>
   )
 }
