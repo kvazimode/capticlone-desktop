@@ -19,3 +19,7 @@
 .slide {
     margin-bottom: 10px;
 }
+
+.slide-selected {
+    background-color: lightgreen;
+}

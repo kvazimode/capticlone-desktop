@@ -5,31 +5,35 @@ import Tabs from './panels/params/tabs.jsx'
 import SlideList from './panels/slide-list/slide-list.jsx'
 import Canvas from './canvas/canvas.jsx'
 
-const bgList = [
-    `bgName1.png`,
-    `bgName2.png`,
-    `bgName3.png`,
-    `bgName4.png`,
-]
-
-const imgList = [
-    `img1.png`,
-    `img2.png`,
-    `img3.png`,
-    `img4.png`,
-    `img5.png`,
-    `img6.png`,
-    `img7.png`,
-]
 class App extends PureComponent {
+    constructor(props) {
+        super(props);
+        this.state = {
+            bgList: this.props.state.library.bgList,
+            imgList: this.props.state.library.imgList,
+            currentSlideID: this.props.state.currentSlide,
+            scale: this.props.state.scale
+        }
+        
+        this.slides = props.proj.slides
+        this.slideNameClickHandler = this.slideNameClickHandler.bind(this)
+    }
+
+    slideNameClickHandler(id) {
+        this.setState({currentSlideID: id})
+    }
+
     render() {
-        const {props} = this.props
         return <>
             <Tools />
             <Canvas />
-            <SlideList />
+            <SlideList
+                slides={this.slides}
+                currentSlideID={this.state.currentSlideID}
+                slideNameClickHandler={this.slideNameClickHandler}
+            />
             <Timeline />
-            <Tabs bgList={bgList} imgList={imgList} />
+            <Tabs bgList={this.state.bgList} imgList={this.state.imgList} />
         </>
     }
 }

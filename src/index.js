@@ -1,12 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './app/app.jsx';
-
-const project = {
-  name: ``
-}
+import state from './data/loaded-state.js';
+import proj from './data/proj.js'
 
 ReactDOM.render(
-  <App />,
+  <App state={state} proj={proj}/>,
   document.getElementById('root')
 )
