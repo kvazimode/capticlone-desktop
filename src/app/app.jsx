@@ -8,29 +8,30 @@ import Canvas from './canvas/canvas.jsx'
 class App extends PureComponent {
     constructor(props) {
         super(props);
+        this.slides = props.proj.slides
         this.state = {
             bgList: this.props.state.library.bgList,
             imgList: this.props.state.library.imgList,
             currentSlideID: this.props.state.currentSlide,
+            currentSlide: this.slides[0],
             scale: this.props.state.scale
         }
         
-        this.slides = props.proj.slides
         this.slideNameClickHandler = this.slideNameClickHandler.bind(this)
     }
 
     slideNameClickHandler(id) {
-        this.setState({currentSlideID: id})
+        this.setState({currentSlideID: id, currentSlide: this._currentSlide(id)})
     }
 
-    _currentSlide() {
-        return this.slides.find(x => x.id == this.state.currentSlideID)
+    _currentSlide(id) {
+        return this.slides.find(x => x.id == id)
     }
 
     render() {
         return <>
             <Tools />
-            <Canvas bgImg={this._currentSlide().bgImg}/>
+            <Canvas bgImg={this.state.currentSlide.bgImg}/>
             <SlideList
                 slides={this.slides}
                 currentSlideID={this.state.currentSlideID}
