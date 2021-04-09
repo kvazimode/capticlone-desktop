@@ -69,7 +69,11 @@ class App extends PureComponent {
                 currentEl={this.state.currentEl}
                 elementClickHandler={this.elementClickHandler}
             />
-            <Tabs bgList={this.state.bgList} imgList={this.state.imgList} />
+            <Tabs
+                bgList={this.state.bgList}
+                imgList={this.state.imgList}
+                currentEl={this.state.currentEl}
+            />
         </>
     }
 }
