@@ -8,20 +8,23 @@ import Highlight from './element/highlight.jsx'
 import Mouse from './element/mouse.jsx'
 
 export default function Element(props) {
-    switch (props.type) {
-        case `simple-text`:
+    if (props.currentEl) {
+        switch (props.currentEl.type) {
+        case `SimpleText`:
             return <SimpleText />;
-        case `slide`:
-            return <Slide bgList={props.bgList}/>;
-        case `image`:
+        case `Image`:
             return <Img imgList={props.imgList}/>;
-        case `rect`:
+        case `Rect`:
             return <Rect />;
-        case `text-block`:
+        case `TextBox`:
             return <TextBlock />;
-        case `highlight`:
+        case `Highlight`:
             return <Highlight />
-        case `mouse`:
-            return <Mouse />
+        case `Mouse`:
+            return <Mouse />;
+        default:
+            return <Slide bgList={props.bgList}/>;
+        }
     }
+    return <Slide bgList={props.bgList}/>
 }

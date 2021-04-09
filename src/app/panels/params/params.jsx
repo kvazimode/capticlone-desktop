@@ -2,20 +2,10 @@ import React from 'react'
 import Basic from './basic.jsx'
 import Element from './element.jsx'
 
-const type = 
-// `simple-text`
-// `block`
-// `slide`
-// `image`
-// `rect`
-`text-block`
-// `highlight`
-// `mouse`
-
 export default function Params(props) {
   const {imgList, bgList} = props
   return <>
       <Basic />
-      <Element type={type} imgList={imgList} bgList={bgList} />
+      <Element currentEl={props.currentEl} imgList={imgList} bgList={bgList} />
       </>
 }
