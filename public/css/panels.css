@@ -41,6 +41,8 @@
     grid-column-end: 3;
     grid-row-start: 2;
     grid-row-end: 4;
+    display: grid;
+    place-items: center;
 }
 
 .canvas {
