@@ -18,3 +18,7 @@
     border: none;
     background-color: orange;
 }
+
+.element-selected .element-name {
+    background-color:lightgreen;
+}
