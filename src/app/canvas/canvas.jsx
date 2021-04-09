@@ -1,12 +1,10 @@
 import React, { useRef, useEffect } from 'react'
 
 export default function Canvas(props) {
-  const bgImg = new Image()
-  bgImg.src = `./img/${props.bgImg}`
   const canvasRef = useRef(null)
 
   function drawBg(ctx) {
-    ctx.drawImage(bgImg, 0, 0, 1280, 720)
+    ctx.drawImage(props.bgImg, 0, 0, 1280, 720)
   }
 
   useEffect(() => {
