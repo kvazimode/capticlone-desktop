@@ -10,7 +10,12 @@ export default function Timeline(props) {
     <div className="panel panel-timeline">
       <Header />
       {props.slide.elements.map((el, num) => {
-        return <TimelineElement key={num} name={el.type} start={el.start} duration={el.duration} />
+        return <TimelineElement
+          key={num}
+          el={el}
+          currentEl={props.currentEl}
+          elementClickHandler={props.elementClickHandler}
+        />
       })}
     </div>
   )

@@ -16,13 +16,24 @@ class App extends PureComponent {
             currentSlideID: this.props.state.currentSlide,
             currentSlide: this.slides[0],
             scale: this.props.state.scale,
-            currentBg: this.bgList[0]
+            currentBg: this.bgList[0],
+            currentEl: null
         }
         this.slideNameClickHandler = this.slideNameClickHandler.bind(this)
+        this.elementClickHandler = this.elementClickHandler.bind(this)
     }
 
     slideNameClickHandler(id) {
-        this.setState({currentSlideID: id, currentSlide: this._currentSlide(id), currentBg: this._currentBg(id)})
+        this.setState({
+            currentSlideID: id, 
+            currentSlide: this._currentSlide(id), 
+            currentBg: this._currentBg(id),
+            currentEl: null
+        })
+    }
+
+    elementClickHandler(el) {
+        this.setState({currentEl: el})
     }
 
     _currentSlide(id) {
@@ -53,7 +64,11 @@ class App extends PureComponent {
                 currentSlideID={this.state.currentSlideID}
                 slideNameClickHandler={this.slideNameClickHandler}
             />
-            <Timeline slide={this.state.currentSlide}/>
+            <Timeline
+                slide={this.state.currentSlide}
+                currentEl={this.state.currentEl}
+                elementClickHandler={this.elementClickHandler}
+            />
             <Tabs bgList={this.state.bgList} imgList={this.state.imgList} />
         </>
     }
