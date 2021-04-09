@@ -53,7 +53,7 @@ class App extends PureComponent {
                 currentSlideID={this.state.currentSlideID}
                 slideNameClickHandler={this.slideNameClickHandler}
             />
-            <Timeline />
+            <Timeline slide={this.state.currentSlide}/>
             <Tabs bgList={this.state.bgList} imgList={this.state.imgList} />
         </>
     }
