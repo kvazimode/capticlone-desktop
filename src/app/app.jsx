@@ -72,13 +72,12 @@ class App extends PureComponent {
 
     handleInputChange(type, val) {
         const newEl = {...this.state.currentEl}
+        
         console.log(type, val)
         if (!Array.isArray(type)) {
-            this.setState(state => {
-                state.currentEl.type = val
-                return state
-            })
+            newEl[type] = val
         }
+        this.setState({currentEl: newEl})
     }
 
     render() {
