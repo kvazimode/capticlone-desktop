@@ -6,7 +6,12 @@ export default function Tab(props) {
     const {imgList, bgList} = props
     switch(props.tab) {
         case `params`:
-            return <Params currentEl={props.currentEl} imgList={imgList} bgList={bgList} />;
+            return <Params
+                handleInputChange={props.handleInputChange}
+                currentEl={props.currentEl}
+                imgList={imgList}
+                bgList={bgList}
+            />;
         case `library`:
             return <Library imgList={imgList} bgList={bgList} />
     }
