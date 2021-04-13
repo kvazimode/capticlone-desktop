@@ -2,8 +2,6 @@ import React from 'react'
 import Header from './header/header.jsx'
 import TimelineElement from './timeline-element/timeline-element.jsx'
 
-
-
 export default function Timeline(props) {
 
   return (

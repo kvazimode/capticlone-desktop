@@ -72,12 +72,13 @@ class App extends PureComponent {
 
     handleInputChange(type, val) {
         const newEl = {...this.state.currentEl}
-        
-        console.log(type, val)
+        const newSlide = {...this.state.currentSlide}
         if (!Array.isArray(type)) {
             newEl[type] = val
         }
-        this.setState({currentEl: newEl})
+        let index = this.state.currentSlide.elements.indexOf(this.state.currentEl)
+        newSlide.elements[index] = newEl
+        this.setState({currentEl: newEl, currentSlide: newSlide})
     }
 
     render() {
