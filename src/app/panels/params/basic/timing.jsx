@@ -26,6 +26,7 @@ function Timing(props) {
                 className="param-field param-field--num" 
                 type="number" 
                 value={start}
+                step="100"
             ></input>
             <label htmlFor="timing-duration">Продолжительность: </label>
             <input
@@ -37,6 +38,7 @@ function Timing(props) {
                 className="param-field param-field--num"
                 type="number"
                 value={duration}
+                step="100"
             ></input>
         </fieldset>
     )
