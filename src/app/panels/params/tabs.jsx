@@ -26,6 +26,7 @@ class Tabs extends React.PureComponent {
                     imgList={this.props.imgList}
                     bgList={this.props.bgList}
                     currentEl={this.props.currentEl}
+                    handleInputChange={this.props.handleInputChange}
                 />
             </div>
         )

@@ -5,6 +5,22 @@ import Tabs from './panels/params/tabs.jsx'
 import SlideList from './panels/slide-list/slide-list.jsx'
 import Canvas from './canvas/canvas.jsx'
 
+const defaultEl = {
+    start: 0,
+    duration: 0,
+    position: {
+        x: 0,
+        y: 0
+    },
+    w: 0,
+    h: 0,
+    transition: {
+        type: `inout`,
+        start: 0,
+        duration: 0
+    }
+}
+
 class App extends PureComponent {
     constructor(props) {
         super(props);
@@ -17,10 +33,11 @@ class App extends PureComponent {
             currentSlide: this.slides[0],
             scale: this.props.state.scale,
             currentBg: this.bgList[0],
-            currentEl: null
+            currentEl: defaultEl
         }
         this.slideNameClickHandler = this.slideNameClickHandler.bind(this)
         this.elementClickHandler = this.elementClickHandler.bind(this)
+        this.handleInputChange = this.handleInputChange.bind(this)
     }
 
     slideNameClickHandler(id) {
@@ -28,7 +45,7 @@ class App extends PureComponent {
             currentSlideID: id, 
             currentSlide: this._currentSlide(id), 
             currentBg: this._currentBg(id),
-            currentEl: null
+            currentEl: defaultEl
         })
     }
 
@@ -55,6 +72,19 @@ class App extends PureComponent {
         return this.bgList.find(x => x.slideID == id)
     }
 
+    handleInputChange(type, val) {
+        const newEl = {...this.state.currentEl}
+        const newSlide = {...this.state.currentSlide}
+        if (!Array.isArray(type)) {
+            newEl[type] = val
+        } else {
+            newEl[type[0]][type[1]] = val
+        }
+        let index = this.state.currentSlide.elements.indexOf(this.state.currentEl)
+        newSlide.elements[index] = newEl
+        this.setState({currentEl: newEl, currentSlide: newSlide})
+    }
+
     render() {
         return <>
             <Tools />
@@ -70,6 +100,7 @@ class App extends PureComponent {
                 elementClickHandler={this.elementClickHandler}
             />
             <Tabs
+                handleInputChange={this.handleInputChange}
                 bgList={this.state.bgList}
                 imgList={this.state.imgList}
                 currentEl={this.state.currentEl}
