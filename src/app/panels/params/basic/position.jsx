@@ -1,18 +1,43 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import Size from './size.jsx'
 
-export default function Position() {
+export default function Position(props) {
+    const [x, setX] = useState(props.position.x)
+    const [y, setY] = useState(props.position.y)
+
+    useEffect(() => {
+        setX(props.position.x)
+    }, [props.position.x])
+
+    useEffect(() => {
+        setY(props.position.y)
+    }, [props.position.y])
+
     return (<fieldset>
         <legend>Позиция, размер</legend>
         <label htmlFor="pos-x">X: </label>
-        <input id="pos-x" className="param-field param-field--num" type="number" defaultValue="0"></input>
+        <input
+            onChange={(e) => {
+                setX(parseInt(e.target.value))
+                props.handleInputChange([`position`, `x`], parseInt(e.target.value))
+            }}
+            id="pos-x"
+            className="param-field param-field--num"
+            type="number"
+            value={x}
+        ></input>
         <label htmlFor="pos-y">Y: </label>
-        <input id="pos-y" className="param-field param-field--num" type="number" defaultValue="0"></input>
-        <label htmlFor="pos-width">Ш: </label>
-        <input id="pos-width" className="param-field param-field--num" type="number" defaultValue="0"></input>
-        <label htmlFor="pos-height">В: </label>
-        <input id="pos-height" className="param-field param-field--num" type="number" defaultValue="0"></input>
-        <label htmlFor="pos-constrain">Пропорции</label>
-        <input id="pos-constrain" type="checkbox"></input>
+        <input
+            onChange={(e) => {
+                setY(parseInt(e.target.value))
+                props.handleInputChange([`position`, `y`], parseInt(e.target.value))
+            }}
+            id="pos-y"
+            className="param-field param-field--num"
+            type="number"
+            value={y}
+        ></input>
+        {props.w ? <Size w={props.w} h={props.h} handleInputChange={props.handleInputChange}/> : ``}
 
     </fieldset>)
 }

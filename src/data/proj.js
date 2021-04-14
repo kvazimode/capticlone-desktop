@@ -60,6 +60,8 @@ export default {
                         x: 200,
                         y: 600
                     },
+                    w: 200,
+                    h: 50,
                     order: 2,
                     hidden: false
                   },

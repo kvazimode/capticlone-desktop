@@ -8,8 +8,10 @@ import Canvas from './canvas/canvas.jsx'
 const defaultEl = {
     start: 0,
     duration: 0,
-    x: 0,
-    y: 0,
+    position: {
+        x: 0,
+        y: 0
+    },
     w: 0,
     h: 0,
     transition: {
@@ -75,6 +77,8 @@ class App extends PureComponent {
         const newSlide = {...this.state.currentSlide}
         if (!Array.isArray(type)) {
             newEl[type] = val
+        } else {
+            newEl[type[0]][type[1]] = val
         }
         let index = this.state.currentSlide.elements.indexOf(this.state.currentEl)
         newSlide.elements[index] = newEl
