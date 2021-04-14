@@ -4,7 +4,7 @@ import Position from './basic/position.jsx'
 import Transition from './basic/transition.jsx'
 
 export default function Basic(props) {
-    const {start, duration, position, w, h} = props.currentEl
+    const {start, duration, position, w, h, fade} = props.currentEl
     return (<form>
         <Timing
             start={start}
@@ -16,6 +16,6 @@ export default function Basic(props) {
             w={w}
             h={h}
             handleInputChange={props.handleInputChange}/>
-        <Transition />
+        <Transition fade={fade ? fade : null} handleInputChange={props.handleInputChange}/>
     </form>)
 }
