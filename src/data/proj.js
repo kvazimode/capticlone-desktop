@@ -11,8 +11,9 @@ export default {
                     type: `SimpleText`,
                     start: 2000,
                     duration: 6000,
-                    font: `36px Arial`,
-                    txtFill: `black`,
+                    fontSize: `36px`,
+                    font: `Arial`,
+                    txtFill: `#000000`,
                     text: `fin`,
                     position: {
                         x: 700,
@@ -26,6 +27,8 @@ export default {
                     start: 4000,
                     duration: 3000,
                     lineWidth: 4,
+                    lineColor: `#ff0000`,
+                    shadowColor: `#000000`,
                     position: {
                         x: 200,
                         y: 300
@@ -52,9 +55,10 @@ export default {
                     type: `TextBox`,
                     start: 5500,
                     duration: 5000,
-                    font: `30px Arial`,
-                    bgFill: `orange`,
-                    txtFill: `white`,
+                    font: `Arial`,
+                    fontSize: `30px`,
+                    bgFill: `#FFA500`,
+                    txtFill: `#ffffff`,
                     text: `Some Text`,
                     position: {
                         x: 200,
@@ -69,8 +73,9 @@ export default {
                     type: `SimpleText`,
                     start: 0,
                     duration: 5000,
-                    font: `36px Arial`,
-                    txtFill: `black`,
+                    font: `Arial`,
+                    fontSize: `36px`,
+                    txtFill: `#000000`,
                     text: `Demo Reel`,
                     position: {
                         x: 320,

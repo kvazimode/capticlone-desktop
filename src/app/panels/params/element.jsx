@@ -11,7 +11,7 @@ export default function Element(props) {
     if (props.currentEl) {
         switch (props.currentEl.type) {
         case `SimpleText`:
-            return <SimpleText />;
+            return <SimpleText currentEl={props.currentEl} handleInputChange={props.handleInputChange}/>;
         case `Image`:
             return <Img imgList={props.imgList}/>;
         case `Rect`:
