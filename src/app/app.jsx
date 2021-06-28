@@ -24,6 +24,7 @@ const defaultEl = {
 class App extends PureComponent {
     constructor(props) {
         super(props);
+        this.resolution = props.proj.resolution
         this.slides = props.proj.slides
         this.bgList = this._preloadBg()
         this.state = {
@@ -88,7 +89,11 @@ class App extends PureComponent {
     render() {
         return <>
             <Tools />
-            <Canvas bgImg={this.state.currentBg}/>
+            <Canvas
+                bgImg={this.state.currentBg}
+                slide={this.state.currentSlide}
+                resolution={this.resolution}
+            />
             <SlideList
                 slides={this.slides}
                 currentSlideID={this.state.currentSlideID}
