@@ -1,5 +1,6 @@
 export default {
     name: `newproj`,
+    resolution: {x: 1280, y: 720},
     slides: [
         {
             id: 0,
