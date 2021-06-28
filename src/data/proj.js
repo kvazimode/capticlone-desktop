@@ -38,9 +38,9 @@ export default {
                     order: 2,
                     fade: {
                         type: `inout`,
-                        duration: 500,
-                        max_alpha: 0.8
+                        duration: 500
                     },
+                    max_alpha: 0.8,
                     hidden: false
                 }
             ]

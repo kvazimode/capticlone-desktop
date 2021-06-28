@@ -38,7 +38,7 @@ export default function TransitionFields(props) {
                 type="number"
                 value={duration}
             ></input>
-            <label htmlFor="time-fade-out">Степень: </label>
+            {/* <label htmlFor="time-fade-out">Степень: </label>
             <input
                 onChange={(e) => {
                     props.handleInputChange([`fade`, `max_alpha`], parseFloat(e.target.value))
@@ -49,6 +49,6 @@ export default function TransitionFields(props) {
                 type="number"
                 value={alpha}
                 step="0.1"
-            ></input>
+            ></input> */}
         </>
 }

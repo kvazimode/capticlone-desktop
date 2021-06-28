@@ -19,7 +19,7 @@ export default function Element(props) {
         case `TextBox`:
             return <TextBlock />;
         case `Highlight`:
-            return <Highlight />
+            return <Highlight currentEl={props.currentEl} handleInputChange={props.handleInputChange} />
         case `Mouse`:
             return <Mouse />;
         default:
