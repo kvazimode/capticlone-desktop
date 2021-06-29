@@ -17,7 +17,7 @@ export default function Element(props) {
         case `Rect`:
             return <Rect />;
         case `TextBox`:
-            return <TextBlock />;
+            return <TextBlock currentEl={props.currentEl} handleInputChange={props.handleInputChange} />;
         case `Highlight`:
             return <Highlight currentEl={props.currentEl} handleInputChange={props.handleInputChange} />
         case `Mouse`:

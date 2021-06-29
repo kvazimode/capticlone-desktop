@@ -11,7 +11,7 @@ export default function SimpleText(props) {
     }, [props.currentEl.font])
 
     useEffect(() => {
-        setSize(parseInt(props.currentEl.fontSize))
+        setSize(parseInt(props.currentEl.fontSize, 10))
     }, [props.currentEl.fontSize])
 
     useEffect(() => {
