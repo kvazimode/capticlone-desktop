@@ -1,13 +1,21 @@
+const path = require ('path')
 const { app, BrowserWindow } = require('electron')
+const isDev = require('electron-is-dev')
+
 
 function createWindow () {
     const win = new BrowserWindow({
-        // maximizable:  true,
+        width: 1024,
+        height: 768,
         webPreferences: {
             nodeIntegration: true
         }
     })
-    win.loadURL(`http://localhost:8081`);
+    win.loadURL(
+        isDev
+            ? 'http://localhost:8081'
+            : `file://${path.join(__dirname, '../build/index.html')}`
+    );
     win.maximize()
 
 }
