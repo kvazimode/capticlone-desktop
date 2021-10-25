@@ -26,7 +26,7 @@ class App extends PureComponent {
         super(props);
         this.resolution = props.proj.resolution
         this.slides = props.proj.slides
-        this.bgList = this._preloadBg()
+        this.bgList = props.bgList
         this.state = {
             bgList: this.props.state.library.bgList,
             imgList: this.props.state.library.imgList,
@@ -56,17 +56,6 @@ class App extends PureComponent {
 
     _currentSlide(id) {
         return this.slides.find(x => x.id == id)
-    }
-
-    _preloadBg() {
-        const preloaded = []
-        this.slides.map(slide => {
-            const img = new Image()
-            img.src = `./img/${slide.bgImg}`
-            img.slideID = slide.id
-            preloaded.push(img)
-        })
-        return preloaded
     }
 
     _currentBg(id) {
