@@ -1,5 +1,5 @@
 {
-  "name": "capticlone-base",
+  "name": "capticlone-desktop",
   "version": "1.0.0",
   "private": true,
   "description": "visual editor",
@@ -48,7 +48,7 @@
   },
   "build": {
     "appId": "com.capticlone",
-    "productName": "Capticlone Base",
+    "productName": "Capticlone Desktop",
     "files": [
       "build/**/*",
       "node_modules/**/*"
