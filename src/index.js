@@ -5,6 +5,8 @@ import SelectProject from './app/select-project.jsx';
 import state from './data/loaded-state.js';
 import proj from './data/proj.js';
 import preloadBg from './util/preload-bg.js';
+const electron = window.require('electron');
+const ipcRenderer  = electron.ipcRenderer;
 
 
 const renderEditor = (data, bgList) => {
@@ -15,10 +17,15 @@ const renderEditor = (data, bgList) => {
 }
 
 const editorDataSelect = (data) => {
-  data ? renderEditor(data, null) : preloadBg(proj).then(bgList => renderEditor(proj, bgList))
+  if (data) {
+    const project = JSON.parse(data)
+    preloadBg(project).then(bgList => renderEditor(project, bgList))
+  } else {
+    preloadBg(proj).then(bgList => renderEditor(proj, bgList))
+  }
 }
 
 ReactDOM.render(
-  <SelectProject editorDataSelect={editorDataSelect}/>,
+  <SelectProject editorDataSelect={editorDataSelect} ipcRenderer={ipcRenderer}/>,
   document.getElementById('root')
 )

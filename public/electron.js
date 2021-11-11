@@ -1,5 +1,6 @@
 const path = require ('path')
-const { app, BrowserWindow } = require('electron')
+const fs = require('fs')
+const { app, BrowserWindow, ipcMain, dialog } = require('electron')
 const isDev = require('electron-is-dev')
 
 
@@ -8,7 +9,8 @@ function createWindow () {
         width: 1024,
         height: 768,
         webPreferences: {
-            nodeIntegration: true
+            nodeIntegration: true,
+            contextIsolation: false
         }
     })
     win.loadURL(
@@ -17,10 +19,19 @@ function createWindow () {
             : `file://${path.join(__dirname, '../build/index.html')}`
     );
     win.maximize()
-
+    
 }
 app.whenReady().then(createWindow)
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit()
 })
+
+ipcMain.handle('file-select', () => {
+    const filePath = dialog.showOpenDialogSync({
+        properties: ['openFile']
+    })
+    const file = fs.readFileSync(filePath[0], "utf-8")
+    return file
+})
+
