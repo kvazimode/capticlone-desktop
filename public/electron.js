@@ -19,7 +19,7 @@ function createWindow () {
             : `file://${path.join(__dirname, '../build/index.html')}`
     );
     win.maximize()
-    
+    win.webContents.openDevTools()
 }
 app.whenReady().then(createWindow)
 
