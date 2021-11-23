@@ -4,22 +4,32 @@ import App from './app/app.jsx';
 import state from './data/loaded-state.js';
 import proj from './data/proj.js';
 import preloadBg from './util/preload-bg.js';
+
 let ipcRenderer = undefined
-ipcRenderer = window.require('electron').ipcRenderer;
 
-const loadFile = async () => {
-  const data = await ipcRenderer.invoke('file-select')
-  data ? editorDataSelect(data) : ipcRenderer.sendSync('message-open-fail')
-}
+// comment next line for browser development
+// ipcRenderer = window.require('electron').ipcRenderer;
 
-const saveFile = async (data) => {
-  const toSave = JSON.stringify(data)
-  const success = await ipcRenderer.invoke('file-save', toSave)
-  success ? ipcRenderer.sendSync('message-saved') : ipcRenderer.sendSync('message-save-fail')
-}
+let loadFile = () => {}
+let saveFile = () => {}
+let closeFile = () => {}
 
-const closeFile = () => {
-  editorDataSelect(null)
+// if electron, reassign file functions
+if (ipcRenderer) {
+  loadFile = async () => {
+    const data = await ipcRenderer.invoke('file-select')
+    data ? editorDataSelect(data) : ipcRenderer.sendSync('message-open-fail')
+  }
+  
+  saveFile = async (data) => {
+    const toSave = JSON.stringify(data)
+    const success = await ipcRenderer.invoke('file-save', toSave)
+    success ? ipcRenderer.sendSync('message-saved') : ipcRenderer.sendSync('message-save-fail')
+  }
+  
+  closeFile = () => {
+    editorDataSelect(null)
+  }
 }
 
 const renderEditor = (data, bgList) => {
