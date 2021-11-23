@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './app/app.jsx';
-import SelectProject from './app/select-project.jsx';
 import state from './data/loaded-state.js';
 import proj from './data/proj.js';
 import preloadBg from './util/preload-bg.js';
@@ -10,7 +9,13 @@ ipcRenderer = window.require('electron').ipcRenderer;
 
 const loadFile = async () => {
   const data = await ipcRenderer.invoke('file-select')
-  editorDataSelect(data)
+  data ? editorDataSelect(data) : ipcRenderer.sendSync('message-open-fail')
+}
+
+const saveFile = async (data) => {
+  const toSave = JSON.stringify(data)
+  const success = await ipcRenderer.invoke('file-save', toSave)
+  success ? ipcRenderer.sendSync('message-saved') : ipcRenderer.sendSync('message-save-fail')
 }
 
 const closeFile = () => {
@@ -25,7 +30,8 @@ const renderEditor = (data, bgList) => {
       proj={data}
       bgList={bgList}
       loadFile={loadFile}
-      closeFile={closeFile}/>,
+      closeFile={closeFile}
+      saveFile={saveFile}/>,
     document.getElementById('root')
   )
 }

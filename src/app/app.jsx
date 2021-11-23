@@ -24,10 +24,11 @@ const defaultEl = {
 class App extends PureComponent {
     constructor(props) {
         super(props);
-        this.resolution = props.proj.resolution
-        this.slides = props.proj.slides
+        this.proj = props.proj
+        this.resolution = this.proj.resolution
+        this.slides = this.proj.slides
         this.bgList = props.bgList
-        this.name = props.proj.name
+        this.name = this.proj.name
         this.state = {
             bgList: this.props.state.library.bgList,
             imgList: this.props.state.library.imgList,
@@ -83,7 +84,7 @@ class App extends PureComponent {
                 this.props.loadFile()
                 break;
             case "save":
-                this.props.saveFile(this.state)
+                this.props.saveFile(this.proj)
                 break;
             case "close":
                 this.props.closeFile()
