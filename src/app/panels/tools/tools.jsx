@@ -5,10 +5,10 @@ import Element from './element.jsx'
 import Order from './order.jsx'
 import Align from './align.jsx'
 
-export default function Tools() {
+export default function Tools(props) {
   return (
     <div className="panel panel-tools">
-      <Project />
+      <Project name={props.name} handleProjectMenu={props.handleProjectMenu}/>
       <Zoom />
       <Element />
       <Order />

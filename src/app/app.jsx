@@ -24,9 +24,11 @@ const defaultEl = {
 class App extends PureComponent {
     constructor(props) {
         super(props);
-        this.resolution = props.proj.resolution
-        this.slides = props.proj.slides
+        this.proj = props.proj
+        this.resolution = this.proj.resolution
+        this.slides = this.proj.slides
         this.bgList = props.bgList
+        this.name = this.proj.name
         this.state = {
             bgList: this.props.state.library.bgList,
             imgList: this.props.state.library.imgList,
@@ -39,6 +41,7 @@ class App extends PureComponent {
         this.slideNameClickHandler = this.slideNameClickHandler.bind(this)
         this.elementClickHandler = this.elementClickHandler.bind(this)
         this.handleInputChange = this.handleInputChange.bind(this)
+        this.handleProjectMenu = this.handleProjectMenu.bind(this)
     }
 
     slideNameClickHandler(id) {
@@ -75,9 +78,23 @@ class App extends PureComponent {
         this.setState({currentEl: newEl, currentSlide: newSlide})
     }
 
+    handleProjectMenu(type) {
+        switch (type) {
+            case "open":
+                this.props.loadFile()
+                break;
+            case "save":
+                this.props.saveFile(this.proj)
+                break;
+            case "close":
+                this.props.closeFile()
+                break;
+            }
+    }
+
     render() {
         return <>
-            <Tools />
+            <Tools name={this.name} handleProjectMenu={this.handleProjectMenu}/>
             <Canvas
                 bgImg={this.state.currentBg}
                 slide={this.state.currentSlide}
