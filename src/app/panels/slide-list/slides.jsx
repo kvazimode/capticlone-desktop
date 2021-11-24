@@ -5,9 +5,9 @@ export default function Slides(props) {
     return (
         <fieldset>
             <legend>Слайды</legend>
-            {props.slides.map(slide => 
+            {props.slides.map((slide, i) => 
                 <Slide
-                key={slide.id}
+                key={i}
                 slide={slide}
                 id={slide.id}
                 currentSlideID={props.currentSlideID}
