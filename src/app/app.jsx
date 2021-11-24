@@ -4,22 +4,7 @@ import Timeline from './panels/timeline/timeline.jsx'
 import Tabs from './panels/params/tabs.jsx'
 import SlideList from './panels/slide-list/slide-list.jsx'
 import Canvas from './canvas/canvas.jsx'
-
-const defaultEl = {
-    start: 0,
-    duration: 0,
-    position: {
-        x: 0,
-        y: 0
-    },
-    w: 0,
-    h: 0,
-    transition: {
-        type: `inout`,
-        start: 0,
-        duration: 0
-    }
-}
+import defaultEl from '../data/default-el.js'
 
 class App extends PureComponent {
     constructor(props) {
