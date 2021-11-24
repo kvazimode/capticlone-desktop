@@ -5,6 +5,7 @@ import Tabs from './panels/params/tabs.jsx'
 import SlideList from './panels/slide-list/slide-list.jsx'
 import Canvas from './canvas/canvas.jsx'
 import defaultEl from '../data/default-el.js'
+import blankSlide from '../data/blank-slide.js'
 
 class App extends PureComponent {
     constructor(props) {
