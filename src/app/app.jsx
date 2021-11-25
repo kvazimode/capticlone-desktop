@@ -4,22 +4,8 @@ import Timeline from './panels/timeline/timeline.jsx'
 import Tabs from './panels/params/tabs.jsx'
 import SlideList from './panels/slide-list/slide-list.jsx'
 import Canvas from './canvas/canvas.jsx'
-
-const defaultEl = {
-    start: 0,
-    duration: 0,
-    position: {
-        x: 0,
-        y: 0
-    },
-    w: 0,
-    h: 0,
-    transition: {
-        type: `inout`,
-        start: 0,
-        duration: 0
-    }
-}
+import defaultEl from '../data/default-el.js'
+import blankSlide from '../data/blank-slide.js'
 
 class App extends PureComponent {
     constructor(props) {
@@ -42,6 +28,8 @@ class App extends PureComponent {
         this.elementClickHandler = this.elementClickHandler.bind(this)
         this.handleInputChange = this.handleInputChange.bind(this)
         this.handleProjectMenu = this.handleProjectMenu.bind(this)
+        this.handleSlideAdd = this.handleSlideAdd.bind(this)
+        this.handleSlideRemove = this.handleSlideRemove.bind(this)
     }
 
     slideNameClickHandler(id) {
@@ -75,7 +63,10 @@ class App extends PureComponent {
         }
         let index = this.state.currentSlide.elements.indexOf(this.state.currentEl)
         newSlide.elements[index] = newEl
-        this.setState({currentEl: newEl, currentSlide: newSlide})
+        this.setState({currentEl: newEl,
+            currentSlide: newSlide,
+            currentEl: defaultEl
+        })
     }
 
     handleProjectMenu(type) {
@@ -92,6 +83,42 @@ class App extends PureComponent {
             }
     }
 
+    handleSlideRemove() {
+        let newID = 0
+        let newSlide = Object.assign({}, blankSlide)
+        if (this.slides.length) {
+            if (this.state.currentSlideID) {
+                newID = this.state.currentSlideID -1
+                newSlide = this.slides[newID]
+            } else {
+                newID = this.state.currentSlideID +1
+                newSlide = this.slides[newID]
+            }
+        }
+        this.slides.splice(this.state.currentSlideID, 1)
+        let newBg = newSlide.bgImg ? this._currentBg(newSlide.id) : null
+        console.log(this.slides, newSlide)
+        this.setState({
+            currentSlideID: newID,
+            currentSlide: newSlide,
+            currentBg: newBg,
+            currentEl: defaultEl
+        })
+    }
+
+    handleSlideAdd() {
+        let newSlide = Object.assign({}, blankSlide)
+        newSlide.id = this.slides.length
+        newSlide.name += this.slides.length +1
+        const newSlideId = this.slides.push(newSlide) -1
+        this.setState({
+            currentSlideID: newSlideId,
+            currentSlide: this.slides[newSlideId],
+            currentBg: null,
+            currentEl: defaultEl
+        })
+    }
+
     render() {
         return <>
             <Tools name={this.name} handleProjectMenu={this.handleProjectMenu}/>
@@ -104,6 +131,8 @@ class App extends PureComponent {
                 slides={this.slides}
                 currentSlideID={this.state.currentSlideID}
                 slideNameClickHandler={this.slideNameClickHandler}
+                handleSlideAdd={this.handleSlideAdd}
+                handleSlideRemove={this.handleSlideRemove}
             />
             <Timeline
                 slide={this.state.currentSlide}

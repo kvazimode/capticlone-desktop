@@ -5,7 +5,7 @@ import Slides from './slides.jsx'
 export default function SlideList(props) {
   return (
     <div className="panel panel-slidelist">
-      <Controls />
+      <Controls handleSlideAdd={props.handleSlideAdd} handleSlideRemove={props.handleSlideRemove}/>
       <Slides
         slides={props.slides}
         currentSlideID={props.currentSlideID}
