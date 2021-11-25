@@ -40,7 +40,7 @@ export default function Canvas(props) {
   }
 
   function drawBg(ctx) {
-    ctx.drawImage(props.bgImg, 0, 0, resolution.x, resolution.y)
+    if (props.bgImg) ctx.drawImage(props.bgImg, 0, 0, resolution.x, resolution.y)
   }
 
   useEffect(() => {
