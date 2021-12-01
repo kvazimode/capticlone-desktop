@@ -86,18 +86,18 @@ class App extends PureComponent {
     handleSlideRemove() {
         let newID = 0
         let newSlide = Object.assign({}, blankSlide)
+        let indexToDelete = this.slides.findIndex(slide => slide.id == this.state.currentSlideID)
+        this.slides.splice(indexToDelete, 1)
         if (this.slides.length) {
-            if (this.state.currentSlideID) {
-                newID = this.state.currentSlideID -1
-                newSlide = this.slides[newID]
+            if (indexToDelete == 0) {
+                newID = this.slides[0].id
+                newSlide = this.slides[0]
             } else {
-                newID = this.state.currentSlideID +1
+                newID = this.state.currentSlideID -1
                 newSlide = this.slides[newID]
             }
         }
-        this.slides.splice(this.state.currentSlideID, 1)
         let newBg = newSlide.bgImg ? this._currentBg(newSlide.id) : null
-        console.log(this.slides, newSlide)
         this.setState({
             currentSlideID: newID,
             currentSlide: newSlide,
