@@ -8,6 +8,7 @@ export default function Slides(props) {
             {props.slides.map((slide, i) => 
                 <Slide
                 key={i}
+                index={i}
                 slide={slide}
                 id={slide.id}
                 currentSlideID={props.currentSlideID}
