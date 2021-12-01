@@ -108,12 +108,16 @@ class App extends PureComponent {
 
     handleSlideAdd() {
         let newSlide = Object.assign({}, blankSlide)
-        newSlide.id = this.slides.length
-        newSlide.name += this.slides.length +1
-        const newSlideId = this.slides.push(newSlide) -1
+        let newID = 0
+        if (this.slides.length) {
+            newID = this.slides[this.slides.length-1].id+1
+        }
+        newSlide.id = newID
+        newSlide.name += newID+1
+        this.slides.push(newSlide)
         this.setState({
-            currentSlideID: newSlideId,
-            currentSlide: this.slides[newSlideId],
+            currentSlideID: newID,
+            currentSlide: newSlide,
             currentBg: null,
             currentEl: defaultEl
         })
