@@ -86,18 +86,18 @@ class App extends PureComponent {
     handleSlideRemove() {
         let newID = 0
         let newSlide = Object.assign({}, blankSlide)
+        let indexToDelete = this.slides.findIndex(slide => slide.id == this.state.currentSlideID)
+        this.slides.splice(indexToDelete, 1)
         if (this.slides.length) {
-            if (this.state.currentSlideID) {
-                newID = this.state.currentSlideID -1
-                newSlide = this.slides[newID]
+            if (indexToDelete == 0) {
+                newID = this.slides[0].id
+                newSlide = this.slides[0]
             } else {
-                newID = this.state.currentSlideID +1
+                newID = this.state.currentSlideID -1
                 newSlide = this.slides[newID]
             }
         }
-        this.slides.splice(this.state.currentSlideID, 1)
         let newBg = newSlide.bgImg ? this._currentBg(newSlide.id) : null
-        console.log(this.slides, newSlide)
         this.setState({
             currentSlideID: newID,
             currentSlide: newSlide,
@@ -108,12 +108,16 @@ class App extends PureComponent {
 
     handleSlideAdd() {
         let newSlide = Object.assign({}, blankSlide)
-        newSlide.id = this.slides.length
-        newSlide.name += this.slides.length +1
-        const newSlideId = this.slides.push(newSlide) -1
+        let newID = 0
+        if (this.slides.length) {
+            newID = this.slides[this.slides.length-1].id+1
+        }
+        newSlide.id = newID
+        newSlide.name += newID+1
+        this.slides.push(newSlide)
         this.setState({
-            currentSlideID: newSlideId,
-            currentSlide: this.slides[newSlideId],
+            currentSlideID: newID,
+            currentSlide: newSlide,
             currentBg: null,
             currentEl: defaultEl
         })
