@@ -94,7 +94,7 @@ class App extends PureComponent {
                 newSlide = this.state.slides[0]
             } else {
                 newID = this.state.currentSlideID -1
-                newSlide = this.state.slides[newID]
+                newSlide = this.state.slides.find(x => x.id == newID)
             }
         }
         let newBg = newSlide.bgImg ? this._currentBg(newSlide.id) : null
