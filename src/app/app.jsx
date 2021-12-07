@@ -10,18 +10,20 @@ import blankSlide from '../data/blank-slide.js'
 class App extends PureComponent {
     constructor(props) {
         super(props);
-        this.resolution = props.proj.resolution
+        this.proj = props.proj
+        this.resolution = this.proj.resolution
         this.bgList = props.bgList
-        this.name = props.proj.name
+        this.name = this.proj.name
         this.state = {
             bgList: this.props.state.library.bgList,
             imgList: this.props.state.library.imgList,
             currentSlideID: 0,
-            currentSlide: this.props.proj.slides[0],
+            currentSlide: this.proj.slides[0],
             scale: this.props.state.scale,
             currentBg: this.bgList[0],
             currentEl: defaultEl,
-            slides: this.props.proj.slides
+            slides: this.proj.slides,
+            idCount: this.proj.slides.length
         }
         this.slideNameClickHandler = this.slideNameClickHandler.bind(this)
         this.elementClickHandler = this.elementClickHandler.bind(this)
@@ -94,7 +96,7 @@ class App extends PureComponent {
                 newSlide = this.state.slides[0]
             } else {
                 newID = this.state.currentSlideID -1
-                newSlide = this.state.slides[newID]
+                newSlide = this.state.slides.find(x => x.id == newID)
             }
         }
         let newBg = newSlide.bgImg ? this._currentBg(newSlide.id) : null
@@ -109,11 +111,8 @@ class App extends PureComponent {
 
     handleSlideAdd() {
         let newSlide = Object.assign({}, blankSlide)
-        let newID = 0
+        let newID = this.state.idCount
         let newSlides = this.state.slides
-        if (newSlides.length) {
-            newID = this.state.slides[this.state.slides.length-1].id+1
-        }
         newSlide.id = newID
         newSlide.name += newID+1
         newSlides.push(newSlide)
@@ -122,7 +121,8 @@ class App extends PureComponent {
             currentSlide: newSlide,
             currentBg: null,
             currentEl: defaultEl,
-            slides: newSlides
+            slides: newSlides,
+            idCount: this.state.idCount+1
         })
     }
 
