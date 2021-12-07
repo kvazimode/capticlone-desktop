@@ -1,8 +1,11 @@
 const path = require ('path')
-const fs = require('fs')
+const fs = require('fs-extra')
+const os = require('os')
 const { app, BrowserWindow, ipcMain, dialog } = require('electron')
 const isDev = require('electron-is-dev')
 
+const projectsFolder = path.resolve(os.homedir(), 'capticlone-projects')
+fs.ensureDirSync(projectsFolder)
 
 function createWindow () {
     const win = new BrowserWindow({
@@ -29,6 +32,7 @@ app.on('window-all-closed', () => {
 
 ipcMain.handle('file-select', () => {
     const filePath = dialog.showOpenDialogSync({
+        defaultPath: projectsFolder,
         properties: ['openFile']
     })
     if (filePath) {
@@ -38,8 +42,11 @@ ipcMain.handle('file-select', () => {
     return undefined
 })
 
-ipcMain.handle('file-save', (e, data) => {
+ipcMain.handle('file-save', (e, data, name) => {
+    let saveFolder = path.resolve(projectsFolder, name)
+    fs.ensureDirSync(saveFolder)
     const filePath = dialog.showSaveDialogSync({
+        defaultPath: path.resolve(saveFolder, `${name}.json`),
         filters: {
             name: 'project',
             extensions: ['.json']

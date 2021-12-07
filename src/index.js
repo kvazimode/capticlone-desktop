@@ -8,7 +8,7 @@ import preloadBg from './util/preload-bg.js';
 let ipcRenderer = undefined
 
 // comment next line for browser development
-// ipcRenderer = window.require('electron').ipcRenderer;
+ipcRenderer = window.require('electron').ipcRenderer;
 
 let loadFile = () => {}
 let saveFile = () => {}
@@ -22,8 +22,9 @@ if (ipcRenderer) {
   }
   
   saveFile = async (data) => {
+    const name = data.name
     const toSave = JSON.stringify(data)
-    const success = await ipcRenderer.invoke('file-save', toSave)
+    const success = await ipcRenderer.invoke('file-save', toSave, name)
     success ? ipcRenderer.sendSync('message-saved') : ipcRenderer.sendSync('message-save-fail')
   }
   
