@@ -8,7 +8,7 @@ import preloadBg from './util/preload-bg.js';
 let ipcRenderer = undefined
 
 // comment next line for browser development
-ipcRenderer = window.require('electron').ipcRenderer;
+// ipcRenderer = window.require('electron').ipcRenderer;
 
 let loadFile = () => {}
 let saveFile = () => {}
