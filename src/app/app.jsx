@@ -95,7 +95,7 @@ class App extends PureComponent {
                 newID = this.state.slides[0].id
                 newSlide = this.state.slides[0]
             } else {
-                newID = this.state.currentSlideID -1
+                newID = newSlides[indexToDelete-1].id
                 newSlide = this.state.slides.find(x => x.id == newID)
             }
         }
