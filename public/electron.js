@@ -61,33 +61,27 @@ ipcMain.handle('file-save', (e, data, name) => {
 
 ipcMain.on('message-saved', evt => {
     dialog.showMessageBoxSync({
-        properties: {
-            message: 'СХОРОНИЛ!',
-            type: 'info',
-            title: 'сохранения процесс'
-        }
+        message: 'СХОРОНИЛ!',
+        type: 'info',
+        title: 'сохранения процесс'
     })
     evt.returnValue = true
 })
 
 ipcMain.on('message-save-fail', evt => {
     dialog.showMessageBoxSync({
-        properties: {
-            message: 'НЕ СХОРОНИЛ!',
-            type: 'error',
-            title: 'сохранения процесс'
-        }
+        message: 'НЕ СХОРОНИЛ!',
+        type: 'error',
+        title: 'сохранения процесс'
     })
     evt.returnValue = true
 })
 
 ipcMain.on('message-open-fail', evt => {
     dialog.showMessageBoxSync({
-        properties: {
-            message: 'НЕ ОТКРЫЛ!',
-            type: 'error',
-            title: 'открытия процесс'
-        }
+        message: 'НЕ ОТКРЫЛ!',
+        type: 'error',
+        title: 'открытия процесс'
     })
     evt.returnValue = true
 })
