@@ -15,6 +15,7 @@ export default function Project(props) {
                     setName(props.name)
                 }} value={'DEFAULT'}>
                 <option value="DEFAULT" disabled hidden>Файл</option>
+                <option value="blank">Новый</option>
                 <option value="open">Открыть</option>
                 <option value="save">Сохранить</option>
                 <option>Экспорт</option>
