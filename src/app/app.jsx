@@ -81,6 +81,9 @@ class App extends PureComponent {
             case "close":
                 this.props.closeFile()
                 break;
+            case "blank":
+                this.props.blankFile()
+                break;
             }
     }
 

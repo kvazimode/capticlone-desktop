@@ -4,6 +4,7 @@ import App from './app/app.jsx';
 import state from './data/loaded-state.js';
 import proj from './data/proj.js';
 import preloadBg from './util/preload-bg.js';
+import blankProj from './data/blank.js';
 
 let ipcRenderer = undefined
 
@@ -13,6 +14,7 @@ ipcRenderer = window.require('electron').ipcRenderer;
 let loadFile = () => {}
 let saveFile = () => {}
 let closeFile = () => {}
+let blankFile = () => {}
 
 // if electron, reassign file functions
 if (ipcRenderer) {
@@ -28,8 +30,13 @@ if (ipcRenderer) {
     success ? ipcRenderer.sendSync('message-saved') : ipcRenderer.sendSync('message-save-fail')
   }
   
+  // demo mode
   closeFile = () => {
     editorDataSelect(null)
+  }
+
+  blankFile = () => {
+    editorDataSelect(blankProj)
   }
 }
 
@@ -42,15 +49,18 @@ const renderEditor = (data, bgList) => {
       bgList={bgList}
       loadFile={loadFile}
       closeFile={closeFile}
-      saveFile={saveFile}/>,
+      saveFile={saveFile}
+      blankFile={blankFile}/>,
     document.getElementById('root')
   )
 }
 
 const editorDataSelect = (data) => {
-  if (data) {
+  if (typeof data == 'string') {
     const project = JSON.parse(data)
     preloadBg(proj).then(bgList => renderEditor(project, bgList))
+  } else if (data != null) {
+    preloadBg(proj).then(bgList => renderEditor(data, bgList))
   } else {
     preloadBg(proj).then(bgList => renderEditor(proj, bgList))
   }
