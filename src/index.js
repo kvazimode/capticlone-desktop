@@ -9,12 +9,13 @@ import blankProj from './data/blank.js';
 let ipcRenderer = undefined
 
 // comment next line for browser development
-ipcRenderer = window.require('electron').ipcRenderer;
+// ipcRenderer = window.require('electron').ipcRenderer;
 
 let loadFile = () => {}
 let saveFile = () => {}
 let closeFile = () => {}
 let blankFile = () => {}
+let uploadBG = () => {}
 
 // if electron, reassign file functions
 if (ipcRenderer) {
@@ -29,15 +30,15 @@ if (ipcRenderer) {
     const success = await ipcRenderer.invoke('file-save', toSave, name)
     success ? ipcRenderer.sendSync('message-saved') : ipcRenderer.sendSync('message-save-fail')
   }
+}
   
-  // demo mode
-  closeFile = () => {
-    editorDataSelect(null)
-  }
+// demo mode
+closeFile = () => {
+  editorDataSelect(null)
+}
 
-  blankFile = () => {
-    editorDataSelect(blankProj)
-  }
+blankFile = () => {
+  editorDataSelect(blankProj)
 }
 
 const renderEditor = (data, bgList) => {
@@ -50,7 +51,8 @@ const renderEditor = (data, bgList) => {
       loadFile={loadFile}
       closeFile={closeFile}
       saveFile={saveFile}
-      blankFile={blankFile}/>,
+      blankFile={blankFile}
+      uploadBG={uploadBG}/>,
     document.getElementById('root')
   )
 }
