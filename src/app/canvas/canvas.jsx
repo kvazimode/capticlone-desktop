@@ -25,6 +25,7 @@ export default function Canvas(props) {
 
   let composer = () => {
     let stack = []
+    if (!props.slide || !props.slide.elements) return stack
     props.slide.elements.forEach(item => {
             stack.push(makeObject(item))
     })

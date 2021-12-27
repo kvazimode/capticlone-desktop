@@ -4,15 +4,18 @@ import App from './app/app.jsx';
 import state from './data/loaded-state.js';
 import proj from './data/proj.js';
 import preloadBg from './util/preload-bg.js';
+import blankProj from './data/blank.js';
 
 let ipcRenderer = undefined
 
 // comment next line for browser development
-// ipcRenderer = window.require('electron').ipcRenderer;
+ipcRenderer = window.require('electron').ipcRenderer;
 
 let loadFile = () => {}
 let saveFile = () => {}
 let closeFile = () => {}
+let blankFile = () => {}
+let uploadBG = () => {}
 
 // if electron, reassign file functions
 if (ipcRenderer) {
@@ -27,10 +30,15 @@ if (ipcRenderer) {
     const success = await ipcRenderer.invoke('file-save', toSave, name)
     success ? ipcRenderer.sendSync('message-saved') : ipcRenderer.sendSync('message-save-fail')
   }
+}
   
-  closeFile = () => {
-    editorDataSelect(null)
-  }
+// demo mode
+closeFile = () => {
+  editorDataSelect(null)
+}
+
+blankFile = () => {
+  editorDataSelect(JSON.stringify(blankProj))
 }
 
 const renderEditor = (data, bgList) => {
@@ -42,17 +50,21 @@ const renderEditor = (data, bgList) => {
       bgList={bgList}
       loadFile={loadFile}
       closeFile={closeFile}
-      saveFile={saveFile}/>,
+      saveFile={saveFile}
+      blankFile={blankFile}
+      uploadBG={uploadBG}/>,
     document.getElementById('root')
   )
 }
 
 const editorDataSelect = (data) => {
-  if (data) {
-    const project = JSON.parse(data)
-    preloadBg(proj).then(bgList => renderEditor(project, bgList))
+  let project = {}
+  if (typeof data == 'string') {
+    project = JSON.parse(data)
+    preloadBg(project).then(bgList => renderEditor(project, bgList))
   } else {
-    preloadBg(proj).then(bgList => renderEditor(proj, bgList))
+    project = Object.assign({}, proj)
+    preloadBg(project).then(bgList => renderEditor(project, bgList))
   }
 }
 
