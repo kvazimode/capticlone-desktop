@@ -15,6 +15,7 @@ export default function Library(props) {
             <summary>Фоны</summary>
             <ul>
                 {bgList.map((img, num) => {
+                    if (!img) return
                     return <li key={num}>{img}</li>
                 })}
             </ul>

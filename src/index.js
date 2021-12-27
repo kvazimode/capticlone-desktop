@@ -9,7 +9,7 @@ import blankProj from './data/blank.js';
 let ipcRenderer = undefined
 
 // comment next line for browser development
-// ipcRenderer = window.require('electron').ipcRenderer;
+ipcRenderer = window.require('electron').ipcRenderer;
 
 let loadFile = () => {}
 let saveFile = () => {}
@@ -38,7 +38,7 @@ closeFile = () => {
 }
 
 blankFile = () => {
-  editorDataSelect(blankProj)
+  editorDataSelect(JSON.stringify(blankProj))
 }
 
 const renderEditor = (data, bgList) => {
@@ -58,13 +58,13 @@ const renderEditor = (data, bgList) => {
 }
 
 const editorDataSelect = (data) => {
+  let project = {}
   if (typeof data == 'string') {
-    const project = JSON.parse(data)
-    preloadBg(proj).then(bgList => renderEditor(project, bgList))
-  } else if (data != null) {
-    preloadBg(proj).then(bgList => renderEditor(data, bgList))
+    project = JSON.parse(data)
+    preloadBg(project).then(bgList => renderEditor(project, bgList))
   } else {
-    preloadBg(proj).then(bgList => renderEditor(proj, bgList))
+    project = Object.assign({}, proj)
+    preloadBg(project).then(bgList => renderEditor(project, bgList))
   }
 }
 
