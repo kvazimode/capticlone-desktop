@@ -82,7 +82,6 @@ class App extends PureComponent {
                 this.props.closeFile()
                 break;
             case "blank":
-                this.setState({currentBg: undefined, currentSlideID: 0})
                 this.props.blankFile()
                 break;
             }
