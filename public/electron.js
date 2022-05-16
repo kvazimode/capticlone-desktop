@@ -2,6 +2,7 @@ const path = require ('path')
 const fs = require('fs-extra')
 const os = require('os')
 const { app, BrowserWindow, ipcMain, dialog } = require('electron')
+const ziper = require('adm-zip')
 const isDev = require('electron-is-dev')
 
 const projectsFolder = path.resolve(os.homedir(), 'capticlone-projects')
@@ -13,7 +14,8 @@ function createWindow () {
         height: 768,
         webPreferences: {
             nodeIntegration: true,
-            contextIsolation: false
+            contextIsolation: false,
+            webSecurity: false // !!! erase on release
         }
     })
     win.loadURL(
@@ -22,7 +24,7 @@ function createWindow () {
             : `file://${path.join(__dirname, '../build/index.html')}`
     );
     win.maximize()
-    win.webContents.openDevTools()
+       // win.webContents.openDevTools()
 }
 app.whenReady().then(createWindow)
 
@@ -35,9 +37,30 @@ ipcMain.handle('file-select', () => {
         defaultPath: projectsFolder,
         properties: ['openFile']
     })
+    const parsedPath = path.parse(filePath[0])
+    const folderToExtract = `${parsedPath.dir}/${parsedPath.name}`
     if (filePath) {
-        const file = fs.readFileSync(filePath[0], "utf-8")
-        return file
+        const projectZip = new ziper(filePath[0])
+        fs.ensureDirSync(folderToExtract)
+        projectZip.extractAllTo(folderToExtract, true)
+        const file = fs.readFileSync(`${folderToExtract}/proj.json`, "utf-8")
+        const bgContents = fs.readdirSync(`${folderToExtract}/bg`)
+        const imgContents = fs.readdirSync(`${folderToExtract}/img`)
+        const bgs = []
+        const images = []
+        imgContents.forEach(file => {
+            if (path.extname(file) == `.png` || path.extname(file) == `.jpg`) {
+                images.push(file)
+            }
+        })
+        bgContents.forEach(file => {
+            if (path.extname(file) == `.png` || path.extname(file) == `.jpg`) {
+                
+                bgs.push(file)
+            }
+        })
+        console.log(images, folderToExtract)
+        return [file, bgs, images, folderToExtract]
     }
     return undefined
 })

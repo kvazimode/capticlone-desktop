@@ -15,8 +15,8 @@ class App extends PureComponent {
         this.bgList = props.bgList
         this.name = this.proj.name
         this.state = {
-            bgList: this.proj.slides.map((item) => item.bgImg),
-            imgList: this.props.state.library.imgList,
+            bgList: this.props.backgrounds,
+            imgList: this.props.images,
             currentSlideID: 0,
             currentSlide: this.proj.slides[0],
             scale: 1,

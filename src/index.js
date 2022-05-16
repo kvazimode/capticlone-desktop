@@ -20,8 +20,8 @@ let uploadBG = () => {}
 // if electron, reassign file functions
 if (ipcRenderer) {
   loadFile = async () => {
-    const data = await ipcRenderer.invoke('file-select')
-    data ? editorDataSelect(data) : ipcRenderer.sendSync('message-open-fail')
+    const [data, bgs, images, projectPath] = await ipcRenderer.invoke('file-select')
+    data ? editorDataSelect(data, bgs, images, projectPath) : ipcRenderer.sendSync('message-open-fail')
   }
   
   saveFile = async (data) => {
@@ -41,11 +41,12 @@ blankFile = () => {
   editorDataSelect(JSON.stringify(blankProj))
 }
 
-const renderEditor = (data, bgList) => {
+const renderEditor = (data, bgList, images, bgs) => {
   ReactDOM.unmountComponentAtNode(document.getElementById('root'))
   ReactDOM.render(
     <App 
-      state={state}
+      images={images}
+      backgrounds={bgs}
       proj={data}
       bgList={bgList}
       loadFile={loadFile}
@@ -57,14 +58,16 @@ const renderEditor = (data, bgList) => {
   )
 }
 
-const editorDataSelect = (data) => {
+const editorDataSelect = (data, bgs, images, projectPath) => {
   let project = {}
   if (typeof data == 'string') {
     project = JSON.parse(data)
-    preloadBg(project).then(bgList => renderEditor(project, bgList))
+    preloadBg(project, `file://${projectPath}/bg`).then(bgList => renderEditor(project, bgList, images, bgs))
   } else {
     project = Object.assign({}, proj)
-    preloadBg(project).then(bgList => renderEditor(project, bgList))
+    const images = state.library.imgList
+    const bgs = state.library.bgList
+    preloadBg(project, `./img`).then(bgList => renderEditor(project, bgList, images, bgs))
   }
 }
 
