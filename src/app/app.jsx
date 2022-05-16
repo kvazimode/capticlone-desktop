@@ -15,11 +15,11 @@ class App extends PureComponent {
         this.bgList = props.bgList
         this.name = this.proj.name
         this.state = {
-            bgList: this.props.state.library.bgList,
+            bgList: this.proj.slides.map((item) => item.bgImg),
             imgList: this.props.state.library.imgList,
             currentSlideID: 0,
             currentSlide: this.proj.slides[0],
-            scale: this.props.state.scale,
+            scale: 1,
             currentBg: this.bgList[0],
             currentEl: defaultEl,
             slides: this.proj.slides,
@@ -130,6 +130,7 @@ class App extends PureComponent {
     }
 
     render() {
+        console.log(this.state.bgList, this.bgList, this.proj.slides)
         return <>
             <Tools name={this.name} handleProjectMenu={this.handleProjectMenu}/>
             <Canvas

@@ -3,7 +3,7 @@ import Header from './header/header.jsx'
 import TimelineElement from './timeline-element/timeline-element.jsx'
 
 export default function Timeline(props) {
-  if (!props.slide.elements) {
+  if (!props.slide || !props.slide.elements) {
     return <div className="panel panel-timeline"><Header /></div>
   }
   return (
