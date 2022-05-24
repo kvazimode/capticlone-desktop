@@ -12,7 +12,7 @@ class App extends PureComponent {
         super(props);
         this.proj = props.proj
         this.resolution = this.proj.resolution
-        this.bgList = props.bgList
+        this.bgImages = props.bgImages
         this.name = this.proj.name
         this.state = {
             bgList: this.props.backgrounds,
@@ -20,7 +20,7 @@ class App extends PureComponent {
             currentSlideID: 0,
             currentSlide: this.proj.slides[0],
             scale: 1,
-            currentBg: this.bgList[0],
+            currentBg: this.bgImages.get(this.proj.slides[0].bgImg),
             currentEl: defaultEl,
             slides: this.proj.slides,
             idCount: this.proj.slides.length
@@ -31,6 +31,7 @@ class App extends PureComponent {
         this.handleProjectMenu = this.handleProjectMenu.bind(this)
         this.handleSlideAdd = this.handleSlideAdd.bind(this)
         this.handleSlideRemove = this.handleSlideRemove.bind(this)
+        this.handleBgChange = this.handleBgChange.bind(this)
     }
 
     slideNameClickHandler(id) {
@@ -51,7 +52,9 @@ class App extends PureComponent {
     }
 
     _currentBg(id) {
-        return this.bgList.find(x => x.slideID == id)
+        let slide = this.state.slides.find(slide => slide.id == id)
+        const bg = slide.bgImg
+        return this.bgImages.get(bg)
     }
 
     handleInputChange(type, val) {
@@ -67,6 +70,24 @@ class App extends PureComponent {
         this.setState({
             currentEl: newEl,
             currentSlide: newSlide
+        })
+    }
+
+    handleBgChange(name) {
+        const newSlide = Object.assign({}, this.state.currentSlide)
+        let newBg = this.state.currentBg
+        for (const img of this.bgImages.values()) {
+            if (img.bgName == name) {
+                newBg = img
+            }
+        }
+        const newSlides = this.state.slides
+        newSlide.bgImg = name
+        newSlides[this.state.currentSlideID] = newSlide
+        this.setState({
+            currentSlide: newSlide,
+            currentBg: newBg,
+            slides: newSlides
         })
     }
 
@@ -131,7 +152,6 @@ class App extends PureComponent {
     }
 
     render() {
-        console.log(this.state.bgList, this.bgList, this.proj.slides)
         return <>
             <Tools name={this.name} handleProjectMenu={this.handleProjectMenu}/>
             <Canvas
@@ -152,6 +172,7 @@ class App extends PureComponent {
                 elementClickHandler={this.elementClickHandler}
             />
             <Tabs
+                handleBgChange={this.handleBgChange}
                 handleInputChange={this.handleInputChange}
                 bgList={this.state.bgList}
                 imgList={this.state.imgList}

@@ -55,11 +55,9 @@ ipcMain.handle('file-select', () => {
         })
         bgContents.forEach(file => {
             if (path.extname(file) == `.png` || path.extname(file) == `.jpg`) {
-                
                 bgs.push(file)
             }
         })
-        console.log(images, folderToExtract)
         return [file, bgs, images, folderToExtract]
     }
     return undefined

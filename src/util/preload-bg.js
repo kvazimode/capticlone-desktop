@@ -1,14 +1,12 @@
-const preloadBg = (proj, projectPath) => {
+const preloadBg = (bgs, projectPath) => {
     return new Promise((res, rej) => {
-        const preloaded = []
-        proj.slides.map(slide => {
-            if (slide.bgImg == null) return
+        const preloaded = new Map()
+        bgs.map(bgName => {
             const img = new Image()
-            img.src = `${projectPath}/${slide.bgImg}`
-            img.slideID = slide.id
-            preloaded.push(img)
+            img.bgName = bgName
+            img.src = `${projectPath}/${bgName}`
+            preloaded.set(bgName, img)
         })
-        console.log(preloaded)
         res(preloaded)
     })
 }

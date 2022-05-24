@@ -7,6 +7,7 @@ export default function Tab(props) {
     switch(props.tab) {
         case `params`:
             return <Params
+                handleBgChange={props.handleBgChange}
                 handleInputChange={props.handleInputChange}
                 currentEl={props.currentEl}
                 imgList={imgList}
