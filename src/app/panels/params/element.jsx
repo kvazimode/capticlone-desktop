@@ -23,7 +23,7 @@ export default function Element(props) {
         case `Mouse`:
             return <Mouse />;
         default:
-            return <Slide bgList={props.bgList}/>;
+            return <Slide bgList={props.bgList} handleBgChange={props.handleBgChange}/>;
         }
     }
     return <Slide bgList={props.bgList}/>

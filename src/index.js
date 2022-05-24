@@ -41,14 +41,14 @@ blankFile = () => {
   editorDataSelect(JSON.stringify(blankProj))
 }
 
-const renderEditor = (data, bgList, images, bgs) => {
+const renderEditor = (data, bgImages, images, bgs) => {
   ReactDOM.unmountComponentAtNode(document.getElementById('root'))
   ReactDOM.render(
     <App 
       images={images}
       backgrounds={bgs}
       proj={data}
-      bgList={bgList}
+      bgImages={bgImages}
       loadFile={loadFile}
       closeFile={closeFile}
       saveFile={saveFile}
@@ -62,12 +62,12 @@ const editorDataSelect = (data, bgs, images, projectPath) => {
   let project = {}
   if (typeof data == 'string') {
     project = JSON.parse(data)
-    preloadBg(project, `file://${projectPath}/bg`).then(bgList => renderEditor(project, bgList, images, bgs))
+    preloadBg(bgs, `file://${projectPath}/bg`).then(bgImages => renderEditor(project, bgImages, images, bgs))
   } else {
     project = Object.assign({}, proj)
     const images = state.library.imgList
     const bgs = state.library.bgList
-    preloadBg(project, `./img`).then(bgList => renderEditor(project, bgList, images, bgs))
+    preloadBg(bgs, `./img`).then(bgImages => renderEditor(project, bgImages, images, bgs))
   }
 }
 
