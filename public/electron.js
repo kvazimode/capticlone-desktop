@@ -6,6 +6,7 @@ const ziper = require('adm-zip')
 const isDev = require('electron-is-dev')
 
 const projectsFolder = path.resolve(os.homedir(), 'capticlone-projects')
+let currentProjectFolder = null
 fs.ensureDirSync(projectsFolder)
 
 function createWindow () {
@@ -39,11 +40,12 @@ ipcMain.handle('file-select', () => {
     })
     const parsedPath = path.parse(filePath[0])
     const folderToExtract = `${parsedPath.dir}/${parsedPath.name}`
+    currentProjectFolder = folderToExtract
     if (filePath) {
         const projectZip = new ziper(filePath[0])
         fs.ensureDirSync(folderToExtract)
         projectZip.extractAllTo(folderToExtract, true)
-        const file = fs.readFileSync(`${folderToExtract}/proj.json`, "utf-8")
+        const file = fs.readFileSync(`${folderToExtract}/${parsedPath.name}.json`, "utf-8")
         const bgContents = fs.readdirSync(`${folderToExtract}/bg`)
         const imgContents = fs.readdirSync(`${folderToExtract}/img`)
         const bgs = []
@@ -78,6 +80,24 @@ ipcMain.handle('file-save', (e, data, name) => {
         return true
     }
     return false
+})
+
+ipcMain.handle('bg-upload', () => {
+    const filePath = dialog.showOpenDialogSync({
+        defaultPath: os.homedir(),
+        properties: ['openFile']
+    })
+    const parsedPath = path.parse(filePath[0])
+    const destination = `${currentProjectFolder}/bg/${parsedPath.base}`
+    fs.copyFileSync(filePath[0], destination)
+    const bgs = []
+    const bgContents = fs.readdirSync(`${currentProjectFolder}/bg`)
+    bgContents.forEach(file => {
+        if (path.extname(file) == `.png` || path.extname(file) == `.jpg`) {
+            bgs.push(file)
+        }
+    })
+    return bgs
 })
 
 ipcMain.on('message-saved', evt => {

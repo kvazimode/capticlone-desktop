@@ -32,6 +32,7 @@ class App extends PureComponent {
         this.handleSlideAdd = this.handleSlideAdd.bind(this)
         this.handleSlideRemove = this.handleSlideRemove.bind(this)
         this.handleBgChange = this.handleBgChange.bind(this)
+        this.addBg = this.addBg.bind(this)
     }
 
     slideNameClickHandler(id) {
@@ -89,6 +90,10 @@ class App extends PureComponent {
             currentBg: newBg,
             slides: newSlides
         })
+    }
+
+    addBg() {
+        this.props.uploadBG()
     }
 
     handleProjectMenu(type) {
@@ -173,6 +178,7 @@ class App extends PureComponent {
             <Tabs
                 handleBgChange={this.handleBgChange}
                 handleInputChange={this.handleInputChange}
+                addBg={this.addBg}
                 bgList={this.state.bgList}
                 imgList={this.state.imgList}
                 currentEl={this.state.currentEl}

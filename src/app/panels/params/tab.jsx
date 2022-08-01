@@ -14,6 +14,6 @@ export default function Tab(props) {
                 bgList={bgList}
             />;
         case `library`:
-            return <Library imgList={imgList} bgList={bgList} />
+            return <Library addBg={props.addBg} imgList={imgList} bgList={bgList} />
     }
 }

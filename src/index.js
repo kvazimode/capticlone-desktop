@@ -7,6 +7,9 @@ import preloadBg from './util/preload-bg.js';
 import blankProj from './data/blank.js';
 
 let ipcRenderer = undefined
+let loadedProjectPath = undefined
+let loadedProject = undefined
+let loadedImages = undefined
 
 // comment next line for browser development
 ipcRenderer = window.require('electron').ipcRenderer;
@@ -21,6 +24,9 @@ let uploadBG = () => {}
 if (ipcRenderer) {
   loadFile = async () => {
     const [data, bgs, images, projectPath] = await ipcRenderer.invoke('file-select')
+    loadedProjectPath = projectPath
+    loadedProject = data
+    loadedImages = images
     data ? editorDataSelect(data, bgs, images, projectPath) : ipcRenderer.sendSync('message-open-fail')
   }
   
@@ -29,6 +35,12 @@ if (ipcRenderer) {
     const toSave = JSON.stringify(data)
     const success = await ipcRenderer.invoke('file-save', toSave, name)
     success ? ipcRenderer.sendSync('message-saved') : ipcRenderer.sendSync('message-save-fail')
+  }
+
+  uploadBG = async () => {
+    const bgs = await ipcRenderer.invoke('bg-upload')
+    console.log(bgs)
+    editorDataSelect(loadedProject, bgs, loadedImages, loadedProjectPath)
   }
 }
   
