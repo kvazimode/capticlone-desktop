@@ -13,6 +13,7 @@ export default function Library(props) {
         </details>
         <details open>
             <summary>Фоны</summary>
+            <button onClick={props.addBg}>Добавить</button>
             <ul>
                 {bgList.map((img, num) => {
                     if (!img) return
