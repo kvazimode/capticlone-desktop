@@ -6,6 +6,7 @@ import SlideList from './panels/slide-list/slide-list.jsx'
 import Canvas from './canvas/canvas.jsx'
 import defaultEl from '../data/default-el.js'
 import blankSlide from '../data/blank-slide.js'
+import {simpleBlank} from '../data/simple-blank.js'
 
 class App extends PureComponent {
     constructor(props) {
@@ -33,6 +34,7 @@ class App extends PureComponent {
         this.handleSlideRemove = this.handleSlideRemove.bind(this)
         this.handleBgChange = this.handleBgChange.bind(this)
         this.addBg = this.addBg.bind(this)
+        this.handleClickElAdd = this.handleClickElAdd.bind(this)
     }
 
     slideNameClickHandler(id) {
@@ -59,8 +61,10 @@ class App extends PureComponent {
     }
 
     handleInputChange(type, val) {
-        const newEl = Object.assign({}, this.state.currentEl)
-        const newSlide = Object.assign({}, this.state.currentSlide)
+        const newEl = Object.create(null)
+        Object.assign(newEl, this.state.currentEl)
+        const newSlide = Object.create(null)
+        Object.assign(newSlide, this.state.currentSlide)
         if (!Array.isArray(type)) {
             newEl[type] = val
         } else {
@@ -75,7 +79,8 @@ class App extends PureComponent {
     }
 
     handleBgChange(name) {
-        const newSlide = Object.assign({}, this.state.currentSlide)
+        const newSlide = Object.create(null)
+        Object.assign(newSlide, this.state.currentSlide)
         let newBg = this.state.currentBg
         for (const img of this.bgImages.values()) {
             if (img.bgName == name) {
@@ -113,6 +118,30 @@ class App extends PureComponent {
             }
     }
 
+    handleClickElAdd(type) {
+        const newSlide = Object.create(null)
+        Object.assign(newSlide, this.state.currentSlide)
+        let elements = newSlide.elements
+        const newEl = Object.create(null)
+        switch (type) {
+            case "simple":
+                Object.assign(newEl, simpleBlank)
+                break;
+            case "block":
+                Object.assign(newEl, blockBlank)
+                break;
+            case "highlight":
+                Object.assign(newEl, highlightBlank)
+                break;
+        }
+        newEl.order = elements.length
+        elements.push(newEl)
+        newSlide.elements = elements
+        this.setState({
+            currentSlide: newSlide
+        })
+    }
+
     handleSlideRemove() {
         let newID = 0
         let newSlide = Object.assign({}, blankSlide)
@@ -139,7 +168,8 @@ class App extends PureComponent {
     }
 
     handleSlideAdd() {
-        let newSlide = Object.assign({}, blankSlide)
+        let newSlide = Object.create(null)
+        Object.assign(newSlide, blankSlide)
         let newID = this.state.idCount
         let newSlides = this.state.slides
         newSlide.id = newID
@@ -157,7 +187,11 @@ class App extends PureComponent {
 
     render() {
         return <>
-            <Tools name={this.name} handleProjectMenu={this.handleProjectMenu}/>
+            <Tools
+                name={this.name}
+                handleProjectMenu={this.handleProjectMenu}
+                handleClickElAdd={this.handleClickElAdd}
+            />
             <Canvas
                 bgImg={this.state.currentBg}
                 slide={this.state.currentSlide}

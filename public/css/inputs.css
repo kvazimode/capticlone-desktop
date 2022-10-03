@@ -14,3 +14,7 @@
 .param-field {
     width: 50px;
 }
+
+#bgList {
+    max-width: 100%;
+}
