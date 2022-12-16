@@ -61,8 +61,7 @@ class App extends PureComponent {
     }
 
     handleInputChange(type, val) {
-        const newEl = Object.create(null)
-        Object.assign(newEl, this.state.currentEl)
+        const newEl = {...this.state.currentEl, position: {...this.state.currentEl.position}}
         const newSlide = Object.create(null)
         Object.assign(newSlide, this.state.currentSlide)
         if (!Array.isArray(type)) {
