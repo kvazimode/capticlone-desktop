@@ -18,12 +18,12 @@ class App extends PureComponent {
         this.bgImages = props.bgImages
         this.name = this.proj.name
         this.state = {
-            bgList: this.props.backgrounds,
-            imgList: this.props.images,
+            bgList: this.props.backgrounds ? this.props.backgrounds : [],
+            imgList: this.props.images ? this.props.images : [],
             currentSlideID: 0,
             currentSlide: {...this.proj.slides[0]},
             scale: 1,
-            currentBg: this.bgImages.get(this.proj.slides[0].bgImg),
+            currentBg: (this.bgImages == undefined) ? this.bgImages.get(this.proj.slides[0].bgImg) : undefined,
             currentEl: {...defaultEl, position: {...defaultEl.position}},
             slides: this.proj.slides,
             idCount: this.proj.slides.length
