@@ -8,8 +8,8 @@ export const blockBlank = {
     txtFill: `#ffffff`,
     text: `Some Text`,
     position: {
-        x: 200,
-        y: 600
+        x: 300,
+        y: 300
     },
     w: 200,
     h: 50,

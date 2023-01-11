@@ -6,8 +6,8 @@ export const highlightBlank = {
     lineColor: `#ff0000`,
     shadowColor: `#000000`,
     position: {
-        x: 200,
-        y: 300
+        x: 400,
+        y: 400
     },
     w: 150,
     h: 50,
