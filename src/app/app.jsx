@@ -8,6 +8,7 @@ import defaultEl from '../data/default-el.js'
 import blankSlide from '../data/blank-slide.js'
 import {simpleBlank} from '../data/simple-blank.js'
 import {highlightBlank} from '../data/highlight-blank.js'
+import {blockBlank} from '../data/text-box-blank.js'
 
 class App extends PureComponent {
     constructor(props) {
