@@ -7,6 +7,7 @@ import Canvas from './canvas/canvas.jsx'
 import defaultEl from '../data/default-el.js'
 import blankSlide from '../data/blank-slide.js'
 import {simpleBlank} from '../data/simple-blank.js'
+import {highlightBlank} from '../data/highlight-blank.js'
 
 class App extends PureComponent {
     constructor(props) {
@@ -19,10 +20,10 @@ class App extends PureComponent {
             bgList: this.props.backgrounds,
             imgList: this.props.images,
             currentSlideID: 0,
-            currentSlide: this.proj.slides[0],
+            currentSlide: {...this.proj.slides[0]},
             scale: 1,
             currentBg: this.bgImages.get(this.proj.slides[0].bgImg),
-            currentEl: defaultEl,
+            currentEl: {...defaultEl, position: {...defaultEl.position}},
             slides: this.proj.slides,
             idCount: this.proj.slides.length
         }
@@ -62,8 +63,7 @@ class App extends PureComponent {
 
     handleInputChange(type, val) {
         const newEl = {...this.state.currentEl, position: {...this.state.currentEl.position}}
-        const newSlide = Object.create(null)
-        Object.assign(newSlide, this.state.currentSlide)
+        const newSlide = {...this.state.currentSlide}
         if (!Array.isArray(type)) {
             newEl[type] = val
         } else {
@@ -118,8 +118,7 @@ class App extends PureComponent {
     }
 
     handleClickElAdd(type) {
-        const newSlide = Object.create(null)
-        Object.assign(newSlide, this.state.currentSlide)
+        const newSlide = {...this.state.currentSlide}
         let elements = newSlide.elements
         const newEl = Object.create(null)
         switch (type) {
@@ -167,8 +166,7 @@ class App extends PureComponent {
     }
 
     handleSlideAdd() {
-        let newSlide = Object.create(null)
-        Object.assign(newSlide, blankSlide)
+        let newSlide = {...blankSlide}
         let newID = this.state.idCount
         let newSlides = this.state.slides
         newSlide.id = newID
