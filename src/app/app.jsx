@@ -6,6 +6,7 @@ import SlideList from './panels/slide-list/slide-list.jsx'
 import Canvas from './canvas/canvas.jsx'
 import defaultEl from '../data/default-el.js'
 import blankSlide from '../data/blank-slide.js'
+import NewProjectDialog from '../app/panels/new-project-dialog.jsx'
 import {simpleBlank} from '../data/simple-blank.js'
 import {highlightBlank} from '../data/highlight-blank.js'
 import {blockBlank} from '../data/text-box-blank.js'
@@ -26,7 +27,8 @@ class App extends PureComponent {
             currentBg: (this.bgImages == undefined) ? this.bgImages.get(this.proj.slides[0].bgImg) : undefined,
             currentEl: {...defaultEl, position: {...defaultEl.position}},
             slides: this.proj.slides,
-            idCount: this.proj.slides.length
+            idCount: this.proj.slides.length,
+            showCreateDialog: false
         }
         this.slideNameClickHandler = this.slideNameClickHandler.bind(this)
         this.elementClickHandler = this.elementClickHandler.bind(this)
@@ -37,6 +39,8 @@ class App extends PureComponent {
         this.handleBgChange = this.handleBgChange.bind(this)
         this.addBg = this.addBg.bind(this)
         this.handleClickElAdd = this.handleClickElAdd.bind(this)
+        this.createNew = this.createNew.bind(this)
+        this.resetDialog = this.resetDialog.bind(this)
     }
 
     slideNameClickHandler(id) {
@@ -113,9 +117,18 @@ class App extends PureComponent {
                 this.props.closeFile()
                 break;
             case "blank":
-                this.props.blankFile()
+                this.setState({showCreateDialog: true})
                 break;
             }
+    }
+
+    createNew(projectName) {
+        this.props.blankFile(projectName)
+        this.setState({showCreateDialog: false})
+    }
+
+    resetDialog() {
+        this.setState({showCreateDialog: false})
     }
 
     handleClickElAdd(type) {
@@ -215,6 +228,7 @@ class App extends PureComponent {
                 imgList={this.state.imgList}
                 currentEl={this.state.currentEl}
             />
+            <NewProjectDialog showDialog={this.state.showCreateDialog} createNew={this.createNew} resetDialog={this.resetDialog}/>
         </>
     }
 }
