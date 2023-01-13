@@ -39,18 +39,21 @@ if (ipcRenderer) {
 
   uploadBG = async () => {
     const bgs = await ipcRenderer.invoke('bg-upload')
-    console.log(bgs)
     editorDataSelect(loadedProject, bgs, loadedImages, loadedProjectPath)
+  }
+
+  blankFile = async (projectName) => {
+    const newProject = {...blankProj, resolution: {...blankProj.resolution}, name: projectName}
+    const [savedProject, projectPath] = await ipcRenderer.invoke('file-create-project', JSON.stringify(newProject), projectName)
+    editorDataSelect(savedProject)
+    loadedProject = savedProject
+    loadedProjectPath = projectPath
   }
 }
   
 // demo mode
 closeFile = () => {
   editorDataSelect(null)
-}
-
-blankFile = () => {
-  editorDataSelect(JSON.stringify(blankProj))
 }
 
 const renderEditor = (data, bgImages, images, bgs) => {

@@ -46,7 +46,9 @@ ipcMain.handle('file-select', () => {
         fs.ensureDirSync(folderToExtract)
         projectZip.extractAllTo(folderToExtract, true)
         const file = fs.readFileSync(`${folderToExtract}/${parsedPath.name}.json`, "utf-8")
+        fs.ensureDirSync(`${folderToExtract}/bg`)
         const bgContents = fs.readdirSync(`${folderToExtract}/bg`)
+        fs.ensureDirSync(`${folderToExtract}/img`)
         const imgContents = fs.readdirSync(`${folderToExtract}/img`)
         const bgs = []
         const images = []
@@ -82,6 +84,15 @@ ipcMain.handle('file-save', (e, data, name) => {
     return false
 })
 
+ipcMain.handle('file-create-project', (e, project, projectName) => {
+    let projectFolder = path.resolve(projectsFolder, projectName)
+    fs.ensureDirSync(projectFolder)
+    const projectPath = path.resolve(projectFolder, `${projectName}.json`)
+    fs.writeFileSync(projectPath, project, "utf-8")
+    currentProjectFolder = projectFolder
+    return [project, projectPath]
+})
+
 ipcMain.handle('bg-upload', () => {
     const filePath = dialog.showOpenDialogSync({
         defaultPath: os.homedir(),
@@ -89,6 +100,7 @@ ipcMain.handle('bg-upload', () => {
     })
     const parsedPath = path.parse(filePath[0])
     const destination = `${currentProjectFolder}/bg/${parsedPath.base}`
+    fs.ensureDirSync(`${currentProjectFolder}/bg`)
     fs.copyFileSync(filePath[0], destination)
     const bgs = []
     const bgContents = fs.readdirSync(`${currentProjectFolder}/bg`)
