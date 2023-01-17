@@ -133,7 +133,7 @@ class App extends PureComponent {
     }
 
     handleClickElAdd(type) {
-        const newSlide = {...this.state.currentSlide}
+        const newSlide = {...this.state.currentSlide, elements: [...this.state.currentSlide.elements]}
         let elements = newSlide.elements
         const newEl = Object.create(null)
         switch (type) {
@@ -148,10 +148,17 @@ class App extends PureComponent {
                 break;
         }
         newEl.order = elements.length
-        elements.push(newEl)
-        newSlide.elements = elements
+        newSlide.elements.push(newEl)
+        const modifiedSlides = this.state.slides.map(slide => {
+            if (slide.id == this.state.currentSlideID) {
+                return {...newSlide, elements: [...newSlide.elements]}
+            }
+            return slide
+
+        })
         this.setState({
-            currentSlide: newSlide
+            currentSlide: newSlide,
+            slides: modifiedSlides
         })
     }
 
