@@ -102,6 +102,7 @@ class App extends PureComponent {
     }
 
     addBg() {
+        this.props.saveFile(this.proj)
         this.props.uploadBG()
     }
 
@@ -111,7 +112,7 @@ class App extends PureComponent {
                 this.props.loadFile()
                 break;
             case "save":
-                this.props.saveFile(this.proj)
+                this.props.saveFileDialog(this.proj)
                 break;
             case "close":
                 this.props.closeFile()

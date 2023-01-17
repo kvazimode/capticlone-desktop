@@ -67,7 +67,7 @@ ipcMain.handle('file-select', () => {
     return undefined
 })
 
-ipcMain.handle('file-save', (e, data, name) => {
+ipcMain.handle('file-save-dialog', (e, data, name) => {
     let saveFolder = path.resolve(projectsFolder, name)
     fs.ensureDirSync(saveFolder)
     const filePath = dialog.showSaveDialogSync({
@@ -84,13 +84,19 @@ ipcMain.handle('file-save', (e, data, name) => {
     return false
 })
 
+ipcMain.handle('file-save', (e, data, name) => {
+    let saveFolder = path.resolve(projectsFolder, name)
+    fs.ensureDirSync(saveFolder)
+    fs.writeFileSync(path.resolve(saveFolder, `${name}.json`), data, "utf-8")
+})
+
 ipcMain.handle('file-create-project', (e, project, projectName) => {
     let projectFolder = path.resolve(projectsFolder, projectName)
     fs.ensureDirSync(projectFolder)
     const projectPath = path.resolve(projectFolder, `${projectName}.json`)
     fs.writeFileSync(projectPath, project, "utf-8")
     currentProjectFolder = projectFolder
-    return [project, projectPath]
+    return [project, projectFolder]
 })
 
 ipcMain.handle('bg-upload', () => {
