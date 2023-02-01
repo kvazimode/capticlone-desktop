@@ -21,12 +21,13 @@ class App extends PureComponent {
         this.state = {
             bgList: this.props.backgrounds ? this.props.backgrounds : [],
             imgList: this.props.images ? this.props.images : [],
+            elementList: this.proj.slides.length > 0 ? this.proj.slides[0].elements : [],
             currentSlideID: 0,
-            currentSlide: {...this.proj.slides[0]},
+            currentSlide: {...this.proj.slides[0], elements: (this.proj.slides[0] && this.proj.slides[0].elements.length > 0) ? [...this.proj.slides[0].elements] : []},
             scale: 1,
             currentBg: (this.bgImages == undefined) ? this.bgImages.get(this.proj.slides[0].bgImg) : undefined,
             currentEl: {...defaultEl, position: {...defaultEl.position}},
-            slides: this.proj.slides,
+            slides: [...this.proj.slides],
             idCount: this.proj.slides.length,
             showCreateDialog: false
         }
@@ -44,11 +45,23 @@ class App extends PureComponent {
     }
 
     slideNameClickHandler(id) {
+        const newSlide = {id: this.state.currentSlideID, name: this.state.currentSlide.name, bgImg: this.state.currentBg, elements: this.state.elementList}
+        const modifiedSlides = this.state.slides.map(slide => {
+            if (slide.id == this.state.currentSlideID) {
+                return {...newSlide, elements: [...newSlide.elements]}
+            }
+            return slide
+
+        })
+        const nextSlide = this._currentSlide(id)
+        const nextElementList = nextSlide.elements
         this.setState({
             currentSlideID: id, 
-            currentSlide: this._currentSlide(id), 
+            currentSlide: nextSlide, 
             currentBg: this._currentBg(id),
-            currentEl: defaultEl
+            currentEl: defaultEl,
+            slides: modifiedSlides,
+            elementList: nextElementList
         })
     }
 
@@ -68,17 +81,17 @@ class App extends PureComponent {
 
     handleInputChange(type, val) {
         const newEl = {...this.state.currentEl, position: {...this.state.currentEl.position}}
-        const newSlide = {...this.state.currentSlide}
+        let elements = this.state.elementList
         if (!Array.isArray(type)) {
             newEl[type] = val
         } else {
             newEl[type[0]][type[1]] = val
         }
-        let index = this.state.currentSlide.elements.indexOf(this.state.currentEl)
-        newSlide.elements[index] = newEl
+        let index = this.state.elementList.indexOf(this.state.currentEl)
+        elements[index] = newEl
         this.setState({
             currentEl: newEl,
-            currentSlide: newSlide
+            elementList: elements
         })
     }
 
@@ -102,7 +115,7 @@ class App extends PureComponent {
     }
 
     addBg() {
-        this.props.saveFile(this.proj)
+        this.props.saveFile(this.proj) //change here
         this.props.uploadBG()
     }
 
@@ -112,7 +125,7 @@ class App extends PureComponent {
                 this.props.loadFile()
                 break;
             case "save":
-                this.props.saveFileDialog(this.proj)
+                this.props.saveFileDialog(this.proj) //change here
                 break;
             case "close":
                 this.props.closeFile()
@@ -133,8 +146,7 @@ class App extends PureComponent {
     }
 
     handleClickElAdd(type) {
-        const newSlide = {...this.state.currentSlide, elements: [...this.state.currentSlide.elements]}
-        let elements = newSlide.elements
+        let elements = [...this.state.elementList]
         const newEl = Object.create(null)
         switch (type) {
             case "simple":
@@ -148,24 +160,16 @@ class App extends PureComponent {
                 break;
         }
         newEl.order = elements.length
-        newSlide.elements.push(newEl)
-        const modifiedSlides = this.state.slides.map(slide => {
-            if (slide.id == this.state.currentSlideID) {
-                return {...newSlide, elements: [...newSlide.elements]}
-            }
-            return slide
-
-        })
+        elements.push(newEl)
         this.setState({
-            currentSlide: newSlide,
-            slides: modifiedSlides
+            elementList: elements
         })
     }
 
     handleSlideRemove() {
         let newID = 0
         let newSlide = Object.assign({}, blankSlide)
-        let newSlides = this.state.slides
+        let newSlides = [...this.state.slides]
         let indexToDelete = this.state.slides.findIndex(slide => slide.id == this.state.currentSlideID)
         newSlides.splice(indexToDelete, 1)
         if (newSlides.length) {
@@ -188,9 +192,9 @@ class App extends PureComponent {
     }
 
     handleSlideAdd() {
-        let newSlide = {...blankSlide}
+        let newSlide = {...blankSlide, elements: [...blankSlide.elements]}
         let newID = this.state.idCount
-        let newSlides = this.state.slides
+        let newSlides = [...this.state.slides]
         newSlide.id = newID
         newSlide.name += newID+1
         newSlides.push(newSlide)
@@ -213,7 +217,7 @@ class App extends PureComponent {
             />
             <Canvas
                 bgImg={this.state.currentBg}
-                slide={this.state.currentSlide}
+                elements={this.state.elementList}
                 resolution={this.resolution}
             />
             <SlideList
@@ -224,7 +228,7 @@ class App extends PureComponent {
                 handleSlideRemove={this.handleSlideRemove}
             />
             <Timeline
-                slide={this.state.currentSlide}
+                elements={this.state.elementList}
                 currentEl={this.state.currentEl}
                 elementClickHandler={this.elementClickHandler}
             />
