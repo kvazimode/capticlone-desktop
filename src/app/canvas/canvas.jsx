@@ -25,8 +25,8 @@ export default function Canvas(props) {
 
   let composer = () => {
     let stack = []
-    if (!props.slide || !props.slide.elements) return stack
-    props.slide.elements.forEach(item => {
+    if (!props.elements || !props.elements) return stack
+    props.elements.forEach(item => {
             stack.push(makeObject(item))
     })
     stack.sort((a, b) => b.order - a.order)
@@ -50,7 +50,7 @@ export default function Canvas(props) {
     ctx.clearRect(0, 0, resolution.x, resolution.y)
     drawBg(ctx)
     drawEl(ctx)
-  }, [props.slide])
+  }, [props.elements])
 
   return <>
     <div className="panel panel-canvas">
