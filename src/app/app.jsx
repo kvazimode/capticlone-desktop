@@ -16,16 +16,17 @@ class App extends PureComponent {
         super(props);
         this.proj = props.proj
         this.resolution = this.proj.resolution
-        this.bgImages = props.bgImages
+        this.bgImages = new Map(props.bgImages)
         this.name = this.proj.name
         this.state = {
             bgList: this.props.backgrounds ? this.props.backgrounds : [],
             imgList: this.props.images ? this.props.images : [],
             elementList: this.proj.slides.length > 0 ? this.proj.slides[0].elements : [],
             currentSlideID: 0,
+            slideName: this.proj.slides[0] ? this.proj.slides[0].name : '',
             currentSlide: {...this.proj.slides[0], elements: (this.proj.slides[0] && this.proj.slides[0].elements.length > 0) ? [...this.proj.slides[0].elements] : []},
             scale: 1,
-            currentBg: (this.bgImages == undefined) ? this.bgImages.get(this.proj.slides[0].bgImg) : undefined,
+            currentBg: (this.bgImages == undefined) ? this._currentBg(0) : undefined,
             currentEl: {...defaultEl, position: {...defaultEl.position}},
             slides: [...this.proj.slides],
             idCount: this.proj.slides.length,
@@ -45,7 +46,7 @@ class App extends PureComponent {
     }
 
     slideNameClickHandler(id) {
-        const newSlide = {id: this.state.currentSlideID, name: this.state.currentSlide.name, bgImg: this.state.currentBg, elements: this.state.elementList}
+        const newSlide = {id: this.state.currentSlideID, name: this.state.slideName, bgImg: this.state.currentBg, elements: [...this.state.elementList]}
         const modifiedSlides = this.state.slides.map(slide => {
             if (slide.id == this.state.currentSlideID) {
                 return {...newSlide, elements: [...newSlide.elements]}
@@ -54,11 +55,11 @@ class App extends PureComponent {
 
         })
         const nextSlide = this._currentSlide(id)
-        const nextElementList = nextSlide.elements
+        const nextElementList = [...nextSlide.elements]
         this.setState({
-            currentSlideID: id, 
-            currentSlide: nextSlide, 
-            currentBg: this._currentBg(id),
+            currentSlideID: id,
+            slideName: nextSlide.name,
+            currentBg: nextSlide.bgImg,
             currentEl: defaultEl,
             slides: modifiedSlides,
             elementList: nextElementList
@@ -81,7 +82,7 @@ class App extends PureComponent {
 
     handleInputChange(type, val) {
         const newEl = {...this.state.currentEl, position: {...this.state.currentEl.position}}
-        let elements = this.state.elementList
+        let elements = [...this.state.elementList]
         if (!Array.isArray(type)) {
             newEl[type] = val
         } else {
@@ -95,27 +96,44 @@ class App extends PureComponent {
         })
     }
 
-    handleBgChange(name) {
-        const newSlide = Object.create(null)
-        Object.assign(newSlide, this.state.currentSlide)
+    handleBgChange(bgName) {
         let newBg = this.state.currentBg
         for (const img of this.bgImages.values()) {
-            if (img.bgName == name) {
+            if (img.bgName == bgName) {
                 newBg = img
             }
         }
         const newSlides = this.state.slides
-        newSlide.bgImg = name
-        newSlides[this.state.currentSlideID] = newSlide
+        newSlides[this.state.currentSlideID].bgImg = newBg
         this.setState({
-            currentSlide: newSlide,
             currentBg: newBg,
             slides: newSlides
         })
     }
 
+    gatherProj() {
+        const currentSlide = {
+            id: this.state.currentSlideID,
+            name: this.state.slideName,
+            bgImg: this.state.currentBg,
+            elements: [...this.state.elementList]
+        }
+        const modifiedSlides = this.state.slides.map(slide => {
+            if (slide.id == this.state.currentSlideID) {
+                return {...currentSlide, elements: [...currentSlide.elements]}
+            }
+            return slide
+        })
+        return {
+            name: this.name,
+            resolution: {...this.resolution},
+            slides: modifiedSlides
+        }
+    }
+
     addBg() {
-        this.props.saveFile(this.proj) //change here
+        const proj = this.gatherProj()
+        this.props.saveFile(proj)
         this.props.uploadBG()
     }
 
@@ -125,7 +143,8 @@ class App extends PureComponent {
                 this.props.loadFile()
                 break;
             case "save":
-                this.props.saveFileDialog(this.proj) //change here
+                const proj = this.gatherProj()
+                this.props.saveFileDialog(proj)
                 break;
             case "close":
                 this.props.closeFile()
@@ -175,7 +194,7 @@ class App extends PureComponent {
         if (newSlides.length) {
             if (indexToDelete == 0) {
                 newID = this.state.slides[0].id
-                newSlide = this.state.slides[0]
+                newSlide = {...this.state.slides[0], elements: [...this.state.slides[0].elements]}
             } else {
                 newID = newSlides[indexToDelete-1].id
                 newSlide = this.state.slides.find(x => x.id == newID)
@@ -184,7 +203,6 @@ class App extends PureComponent {
         let newBg = newSlide.bgImg ? this._currentBg(newSlide.id) : null
         this.setState({
             currentSlideID: newID,
-            currentSlide: newSlide,
             currentBg: newBg,
             currentEl: defaultEl,
             slides: newSlides
@@ -200,9 +218,9 @@ class App extends PureComponent {
         newSlides.push(newSlide)
         this.setState({
             currentSlideID: newID,
-            currentSlide: newSlide,
             currentBg: null,
             currentEl: defaultEl,
+            slideName: newSlide.name,
             slides: newSlides,
             idCount: this.state.idCount+1
         })
