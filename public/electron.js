@@ -41,10 +41,11 @@ ipcMain.handle('file-select', () => {
     const parsedPath = path.parse(filePath[0])
     const folderToExtract = `${parsedPath.dir}/${parsedPath.name}`
     currentProjectFolder = folderToExtract
+    console.log(folderToExtract, parsedPath)
     if (filePath) {
         const projectZip = new ziper(filePath[0])
         fs.ensureDirSync(folderToExtract)
-        projectZip.extractAllTo(folderToExtract, true)
+        projectZip.extractAllTo(parsedPath.dir, true)
         const file = fs.readFileSync(`${folderToExtract}/${parsedPath.name}.json`, "utf-8")
         fs.ensureDirSync(`${folderToExtract}/bg`)
         const bgContents = fs.readdirSync(`${folderToExtract}/bg`)
