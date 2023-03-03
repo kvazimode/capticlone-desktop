@@ -251,6 +251,7 @@ class App extends PureComponent {
                 elementClickHandler={this.elementClickHandler}
             />
             <Tabs
+                slideAmount={this.state.slides.length}
                 handleBgChange={this.handleBgChange}
                 handleInputChange={this.handleInputChange}
                 addBg={this.addBg}
