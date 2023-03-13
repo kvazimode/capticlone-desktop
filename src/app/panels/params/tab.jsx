@@ -4,7 +4,6 @@ import Library from './library.jsx'
 
 export default function Tab(props) {
     const {imgList, bgList, slideAmount} = props
-    console.log(slideAmount)
     switch(props.tab) {
         case `params`:
             if (slideAmount > 0) {return <Params

@@ -24,11 +24,14 @@ let uploadBG = () => {}
 // if electron, reassign file functions
 if (ipcRenderer) {
   loadFile = async () => {
-    const [data, bgs, images, projectPath] = await ipcRenderer.invoke('file-select')
-    loadedProjectPath = projectPath
-    loadedProject = data
-    loadedImages = images
-    data ? editorDataSelect(data, bgs, images, projectPath) : ipcRenderer.sendSync('message-open-fail')
+    ipcRenderer.invoke('file-select').then((res) => {
+      loadedProjectPath = res.projectPath
+      loadedProject = res.data
+      loadedImages = res.images
+      editorDataSelect(res.data, res.bgs, res.images, res.projectPath)
+    }).catch((err) => {
+      console.log(err)
+    })
   }
   
   saveFileDialog = async (data) => {

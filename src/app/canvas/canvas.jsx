@@ -50,7 +50,7 @@ export default function Canvas(props) {
     ctx.clearRect(0, 0, resolution.x, resolution.y)
     drawBg(ctx)
     drawEl(ctx)
-  }, [props.elements])
+  }, [props.elements, props.bgImg])
 
   return <>
     <div className="panel panel-canvas">
