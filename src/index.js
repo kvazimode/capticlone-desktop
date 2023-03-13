@@ -16,6 +16,7 @@ ipcRenderer = window.require('electron').ipcRenderer;
 
 let loadFile = () => {}
 let saveFileDialog = () => {}
+let saveProjectDialog = () => {}
 let saveFile = () => {}
 let closeFile = () => {}
 let blankFile = () => {}
@@ -25,6 +26,7 @@ let uploadBG = () => {}
 if (ipcRenderer) {
   loadFile = async () => {
     ipcRenderer.invoke('file-select').then((res) => {
+      console.log(res)
       loadedProjectPath = res.projectPath
       loadedProject = res.data
       loadedImages = res.images
@@ -38,6 +40,13 @@ if (ipcRenderer) {
     const name = data.name
     const toSave = JSON.stringify(data)
     const success = await ipcRenderer.invoke('file-save-dialog', toSave, name)
+    success ? ipcRenderer.sendSync('message-saved') : ipcRenderer.sendSync('message-save-fail')
+  }
+
+  saveProjectDialog = async (data) => {
+    const name = data.name
+    const toSave = JSON.stringify(data)
+    const success = await ipcRenderer.invoke('file-project-dialog', toSave, name)
     success ? ipcRenderer.sendSync('message-saved') : ipcRenderer.sendSync('message-save-fail')
   }
 
@@ -78,6 +87,7 @@ const renderEditor = (data, bgImages, images, bgs) => {
       loadFile={loadFile}
       closeFile={closeFile}
       saveFileDialog={saveFileDialog}
+      saveProjectDialog={saveProjectDialog}
       saveFile={saveFile}
       blankFile={blankFile}
       uploadBG={uploadBG}/>,

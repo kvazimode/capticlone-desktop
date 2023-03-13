@@ -146,6 +146,11 @@ class App extends PureComponent {
                 const proj = this.gatherProj()
                 this.props.saveFileDialog(proj)
                 break;
+            case "save-project":
+                const project = this.gatherProj()
+                this.props.saveFile(project)
+                this.props.saveProjectDialog(project)
+                break;
             case "close":
                 this.props.closeFile()
                 break;
