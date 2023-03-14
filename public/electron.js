@@ -36,13 +36,17 @@ app.on('window-all-closed', () => {
 ipcMain.handle('file-select', () => {
     const filePath = dialog.showOpenDialogSync({
         defaultPath: projectsFolder,
-        properties: ['openFile']
+        properties: ['openFile'],
+        filters: [{
+            name: 'project',
+            extensions: ['zip']
+        }]
     })
     const parsedPath = path.parse(filePath[0])
-    const folderToExtract = `${parsedPath.dir}/${parsedPath.name}`
-    currentProjectFolder = folderToExtract
     if (filePath) {
         const projectZip = new ziper(filePath[0])
+        const folderToExtract = `${parsedPath.dir}/${parsedPath.name}`
+        currentProjectFolder = folderToExtract
         fs.ensureDirSync(folderToExtract)
         projectZip.extractAllTo(folderToExtract, true)
         const file = fs.readFileSync(`${folderToExtract}/${parsedPath.name}.json`, "utf-8")
@@ -62,7 +66,7 @@ ipcMain.handle('file-select', () => {
                 bgs.push(file)
             }
         })
-        return [file, bgs, images, folderToExtract]
+        return {data: file, bgs, images, projectPath: folderToExtract}
     }
     return undefined
 })
@@ -72,13 +76,32 @@ ipcMain.handle('file-save-dialog', (e, data, name) => {
     fs.ensureDirSync(saveFolder)
     const filePath = dialog.showSaveDialogSync({
         defaultPath: path.resolve(saveFolder, `${name}.json`),
-        filters: {
+        filters: [{
             name: 'project',
-            extensions: ['.json']
-        }
+            extensions: ['json']
+        }]
     })
     if (filePath) {
         fs.writeFileSync(filePath, data, "utf-8")
+        return true
+    }
+    return false
+})
+
+ipcMain.handle('file-project-dialog', (e, data, name) => {
+    fs.ensureDirSync(projectsFolder)
+    let package = new ziper()
+    package.addLocalFolder(path.resolve(projectsFolder, name))
+    const filePath = dialog.showSaveDialogSync({
+        defaultPath: path.resolve(projectsFolder, `${name}.zip`),
+        filters: [{
+            name: 'project',
+            extensions: ['zip']
+        }]
+    })
+    if (filePath) {
+        package.writeZip(filePath)
+        // fs.writeFileSync(filePath, data, "utf-8")
         return true
     }
     return false

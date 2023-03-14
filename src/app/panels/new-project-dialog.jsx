@@ -8,12 +8,12 @@ export default function CreateDialog(props) {
     }
     return (
         <div className="dialog">
-            <input type="text"
+            <input autoFocus type="text"
             onChange={(e)=>{
                 setProjectName(e.target.value)
             }}></input>
-            <button onClick={() => props.createNew(projectName)}>Save</button>
-            <button onClick={() => {props.resetDialog()}}>Cancel</button>
+            <button onClick={() => props.createNew(projectName)}>Создать</button>
+            <button onClick={() => {props.resetDialog()}}>Отмена</button>
         </div>
     )
 }
