@@ -8,7 +8,7 @@ export default function Slide(props) {
         onClick={() => (props.slideNameClickHandler(props.id))}>
             <span className="slide-name">{props.index + 1}. {props.slide.name}</span>
             <br/>
-            <span className="slide-bg">{props.slide.bgImg ? props.slide.bgImg.bgName : ''}</span>
+            <span className="slide-bg">{props.slide.bgImg ? props.slide.bgImg : ''}</span>
         </div>
     )
 }

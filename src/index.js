@@ -26,7 +26,6 @@ let uploadBG = () => {}
 if (ipcRenderer) {
   loadFile = async () => {
     ipcRenderer.invoke('file-select').then((res) => {
-      console.log(res)
       loadedProjectPath = res.projectPath
       loadedProject = res.data
       loadedImages = res.images
@@ -79,7 +78,8 @@ closeFile = () => {
 const renderEditor = (data, bgImages, images, bgs) => {
   ReactDOM.unmountComponentAtNode(document.getElementById('root'))
   ReactDOM.render(
-    <App 
+    <App
+      projectPath={loadedProjectPath}
       images={images}
       backgrounds={bgs}
       proj={data}
