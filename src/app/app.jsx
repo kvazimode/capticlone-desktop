@@ -24,7 +24,6 @@ class App extends PureComponent {
             elementList: this.proj.slides.length > 0 ? this.proj.slides[0].elements : [],
             currentSlideID: 0,
             slideName: this.proj.slides[0] ? this.proj.slides[0].name : '',
-            currentSlide: {...this.proj.slides[0], elements: (this.proj.slides[0] && this.proj.slides[0].elements.length > 0) ? [...this.proj.slides[0].elements] : []},
             scale: 1,
             currentBg: ((this.bgImages != undefined) && (this.proj.slides.length > 0)) ? this.bgImages.get(this.proj.slides[0].bgImg) : null,
             currentEl: {...defaultEl, position: {...defaultEl.position}},
@@ -46,7 +45,6 @@ class App extends PureComponent {
     }
 
     slideNameClickHandler(id) {
-        console.log(id, this.state.currentSlideID)
         const newSlide = {
             id: this.state.currentSlideID,
             name: this.state.slideName,
@@ -103,7 +101,6 @@ class App extends PureComponent {
     }
 
     handleBgChange(bgName) {
-        console.log(this.state.currentSlideID, this.state.slides)
         let newBg = this.state.currentBg
         for (const img of this.bgImages.values()) {
             if (img.bgName == bgName) {
