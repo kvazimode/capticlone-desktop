@@ -15,6 +15,7 @@ const prepareData = (proj) => {
     const slides = proj.slides
     let stop = 0
     let bgs = []
+    let elements = []
     for (let slide of slides) {
         const duration = calculateDuration(slide)
         if (slide.bgImg) {
@@ -25,9 +26,16 @@ const prepareData = (proj) => {
             }
             bgs.push(bg)
         }
+        const modifiedElements = slide.elements.map(el => {
+            let newEl = structuredClone(el)
+            newEl.start += stop
+            newEl.end = newEl.start + newEl.duration
+            return newEl
+        })
+        elements = [...elements, ...modifiedElements]
         stop += duration
     }
-    return bgs
+    return [bgs, elements]
 }
 
 export default prepareData
