@@ -11,8 +11,6 @@ export const blockBlank = {
         x: 300,
         y: 300
     },
-    w: 200,
-    h: 50,
     order: 2,
     hidden: false
 }

@@ -5,6 +5,7 @@ import state from './data/loaded-state.js';
 import proj from './data/proj.js';
 import preloadBg from './util/preload-bg.js';
 import blankProj from './data/blank.js';
+import prepareData from './util/prepare-data.js';
 
 let ipcRenderer = undefined
 let loadedProjectPath = undefined
@@ -90,7 +91,8 @@ const renderEditor = (data, bgImages, images, bgs) => {
       saveProjectDialog={saveProjectDialog}
       saveFile={saveFile}
       blankFile={blankFile}
-      uploadBG={uploadBG}/>,
+      uploadBG={uploadBG}
+      prepareData={prepareData}/>,
     document.getElementById('root')
   )
 }

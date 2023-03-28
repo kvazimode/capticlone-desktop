@@ -19,7 +19,7 @@ export default function Project(props) {
                 <option value="open">Открыть</option>
                 <option value="save">Сохранить</option>
                 <option value="save-project">Сохранить пакет</option>
-                <option>Экспорт</option>
+                <option value="export">Экспорт</option>
                 <option value="close">Закрыть</option>
                 <option>Свойства</option>
             </select>
