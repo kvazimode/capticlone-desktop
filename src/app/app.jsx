@@ -64,7 +64,7 @@ class App extends PureComponent {
             currentSlideID: id,
             slideName: nextSlide.name,
             currentBg: this._currentBg(id),
-            currentEl: defaultEl,
+            currentEl: {...defaultEl, position: {...defaultEl.position}},
             slides: modifiedSlides,
             elementList: nextElementList
         })
@@ -221,7 +221,7 @@ class App extends PureComponent {
         this.setState({
             currentSlideID: newID,
             currentBg: newBg,
-            currentEl: defaultEl,
+            currentEl: {...defaultEl, position: {...defaultEl.position}},
             slides: newSlides
         })
     }
@@ -236,10 +236,11 @@ class App extends PureComponent {
         this.setState({
             currentSlideID: newID,
             currentBg: null,
-            currentEl: defaultEl,
+            currentEl: {...defaultEl, position: {...defaultEl.position}},
             slideName: newSlide.name,
             slides: newSlides,
-            idCount: this.state.idCount+1
+            idCount: this.state.idCount+1,
+            elementList: []
         })
     }
 
