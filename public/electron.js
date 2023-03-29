@@ -107,6 +107,32 @@ ipcMain.handle('file-project-dialog', (e, data, name) => {
     return false
 })
 
+ipcMain.handle('export', (e, data, name) => {
+    try {
+    let saveFolder = path.resolve(projectsFolder, name, 'export')
+    fs.ensureDirSync(saveFolder)
+    const bundlePath = path.join(__dirname, '../build/export/bundle.js')
+    let bundle = fs.readFileSync(bundlePath, "utf-8")
+    let extraBundle = bundle.replace('[/*_bg_*/]', JSON.stringify(data[0]))
+    extraBundle = extraBundle.replace('[/*_el_*/]', JSON.stringify(data[1]))
+    let projectFolder = path.resolve(projectsFolder, name)
+    fs.ensureDirSync(projectFolder)
+    fs.writeFileSync(path.resolve(projectFolder, 'export', 'bundle.js'), extraBundle, "utf-8")
+    const bgNames = fs.readdirSync(`${currentProjectFolder}/bg`)
+    fs.ensureDirSync(`${currentProjectFolder}/export/img`)
+    bgNames.forEach(bg => {
+        if (path.extname(bg) == `.png` || path.extname(bg) == `.jpg`) {
+            fs.copyFileSync(`${currentProjectFolder}/bg/${bg}`, `${currentProjectFolder}/export/img/${bg}`)
+        }
+    })
+    fs.copyFileSync(path.join(__dirname, '../build/export/index.html'), `${currentProjectFolder}/export/index.html`)
+    return true
+    } catch (err) {
+        console.log(err)
+        return false
+    }
+})
+
 ipcMain.handle('file-save', (e, data, name) => {
     let saveFolder = path.resolve(projectsFolder, name)
     fs.ensureDirSync(saveFolder)

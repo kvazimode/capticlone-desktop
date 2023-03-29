@@ -22,6 +22,7 @@ let saveFile = () => {}
 let closeFile = () => {}
 let blankFile = () => {}
 let uploadBG = () => {}
+let exportProject = () => {}
 
 // if electron, reassign file functions
 if (ipcRenderer) {
@@ -69,6 +70,12 @@ if (ipcRenderer) {
     loadedProject = savedProject
     loadedProjectPath = projectPath
   }
+
+  exportProject = async (project) => {
+    const data = prepareData(project)
+    const success = await ipcRenderer.invoke('export', data, project.name)
+    success ? ipcRenderer.sendSync('message-saved') : ipcRenderer.sendSync('message-save-fail')
+  }
 }
   
 // demo mode
@@ -92,7 +99,7 @@ const renderEditor = (data, bgImages, images, bgs) => {
       saveFile={saveFile}
       blankFile={blankFile}
       uploadBG={uploadBG}
-      prepareData={prepareData}/>,
+      exportProject={exportProject}/>,
     document.getElementById('root')
   )
 }

@@ -166,8 +166,7 @@ class App extends PureComponent {
                 this.setState({showCreateDialog: true})
                 break;
             case "export":
-                const data = this.props.prepareData(this.gatherProj())
-                console.log(data)
+                this.props.exportProject(this.gatherProj())
                 break;
             }
     }
