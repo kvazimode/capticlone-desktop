@@ -12,10 +12,10 @@ export const highlightBlank = {
     w: 150,
     h: 50,
     order: 2,
-    fade: {
+    mod: {
         type: `inout`,
-        duration: 500
+        duration: 500,
+        max_alpha: 0.8
     },
-    max_alpha: 0.8,
     hidden: false
 }

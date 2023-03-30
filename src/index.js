@@ -5,6 +5,7 @@ import state from './data/loaded-state.js';
 import proj from './data/proj.js';
 import preloadBg from './util/preload-bg.js';
 import blankProj from './data/blank.js';
+import prepareData from './util/prepare-data.js';
 
 let ipcRenderer = undefined
 let loadedProjectPath = undefined
@@ -21,6 +22,7 @@ let saveFile = () => {}
 let closeFile = () => {}
 let blankFile = () => {}
 let uploadBG = () => {}
+let exportProject = () => {}
 
 // if electron, reassign file functions
 if (ipcRenderer) {
@@ -68,6 +70,12 @@ if (ipcRenderer) {
     loadedProject = savedProject
     loadedProjectPath = projectPath
   }
+
+  exportProject = async (project) => {
+    const data = prepareData(project)
+    const success = await ipcRenderer.invoke('export', data, project.name)
+    success ? ipcRenderer.sendSync('message-saved') : ipcRenderer.sendSync('message-save-fail')
+  }
 }
   
 // demo mode
@@ -90,7 +98,8 @@ const renderEditor = (data, bgImages, images, bgs) => {
       saveProjectDialog={saveProjectDialog}
       saveFile={saveFile}
       blankFile={blankFile}
-      uploadBG={uploadBG}/>,
+      uploadBG={uploadBG}
+      exportProject={exportProject}/>,
     document.getElementById('root')
   )
 }

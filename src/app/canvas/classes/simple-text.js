@@ -1,6 +1,6 @@
 class SimpleText {
     constructor(params) {
-      this.font = `${params.fontSize} ${params.font}`
+      this.font = `${parseInt(params.fontSize)}px ${params.font}`
       this.txtFill = params.txtFill
       this.text = params.text
       this.x = params.position.x
