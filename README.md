@@ -4,7 +4,7 @@ Tool to visually edit demo videos - desktop version
 
 ![demo mode](https://raw.githubusercontent.com/kvazimode/capticlone-desktop/main/public/img/demo.png)
 
-Wanna try?
+Wanna try? Use Node.js v16: `nvm install v16`
 ```
 npm i
 npm run build
