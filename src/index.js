@@ -60,7 +60,7 @@ if (ipcRenderer) {
 
   uploadBG = async () => {
     const bgs = await ipcRenderer.invoke('bg-upload')
-    editorDataSelect(loadedProject, bgs, loadedImages, loadedProjectPath)
+    bgs ? editorDataSelect(loadedProject, bgs, loadedImages, loadedProjectPath) : ipcRenderer.sendSync('message-open-fail')
   }
 
   blankFile = async (projectName) => {

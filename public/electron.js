@@ -42,33 +42,34 @@ ipcMain.handle('file-select', () => {
             extensions: ['zip']
         }]
     })
-    const parsedPath = path.parse(filePath[0])
-    if (filePath) {
-        const projectZip = new ziper(filePath[0])
-        const folderToExtract = `${parsedPath.dir}/${parsedPath.name}`
-        currentProjectFolder = folderToExtract
-        fs.ensureDirSync(folderToExtract)
-        projectZip.extractAllTo(folderToExtract, true)
-        const file = fs.readFileSync(`${folderToExtract}/${parsedPath.name}.json`, "utf-8")
-        fs.ensureDirSync(`${folderToExtract}/bg`)
-        const bgContents = fs.readdirSync(`${folderToExtract}/bg`)
-        fs.ensureDirSync(`${folderToExtract}/img`)
-        const imgContents = fs.readdirSync(`${folderToExtract}/img`)
-        const bgs = []
-        const images = []
-        imgContents.forEach(file => {
-            if (path.extname(file) == `.png` || path.extname(file) == `.jpg`) {
-                images.push(file)
-            }
-        })
-        bgContents.forEach(file => {
-            if (path.extname(file) == `.png` || path.extname(file) == `.jpg`) {
-                bgs.push(file)
-            }
-        })
-        return {data: file, bgs, images, projectPath: folderToExtract}
+    if (!filePath) {
+        return
     }
-    return undefined
+
+    const parsedPath = path.parse(filePath[0])
+    const projectZip = new ziper(filePath[0])
+    const folderToExtract = `${parsedPath.dir}/${parsedPath.name}`
+    currentProjectFolder = folderToExtract
+    fs.ensureDirSync(folderToExtract)
+    projectZip.extractAllTo(folderToExtract, true)
+    const file = fs.readFileSync(`${folderToExtract}/${parsedPath.name}.json`, "utf-8")
+    fs.ensureDirSync(`${folderToExtract}/bg`)
+    const bgContents = fs.readdirSync(`${folderToExtract}/bg`)
+    fs.ensureDirSync(`${folderToExtract}/img`)
+    const imgContents = fs.readdirSync(`${folderToExtract}/img`)
+    const bgs = []
+    const images = []
+    imgContents.forEach(file => {
+        if (path.extname(file) == `.png` || path.extname(file) == `.jpg`) {
+            images.push(file)
+        }
+    })
+    bgContents.forEach(file => {
+        if (path.extname(file) == `.png` || path.extname(file) == `.jpg`) {
+            bgs.push(file)
+        }
+    })
+    return {data: file, bgs, images, projectPath: folderToExtract}
 })
 
 ipcMain.handle('file-save-dialog', (e, data, name) => {
@@ -153,6 +154,8 @@ ipcMain.handle('bg-upload', () => {
         defaultPath: os.homedir(),
         properties: ['openFile']
     })
+    console.log(filePath)
+    if (!filePath) return
     const parsedPath = path.parse(filePath[0])
     const destination = `${currentProjectFolder}/bg/${parsedPath.base}`
     fs.ensureDirSync(`${currentProjectFolder}/bg`)

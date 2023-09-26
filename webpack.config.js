@@ -23,4 +23,7 @@ module.exports = {
     ],
   },
   devtool: `source-map`,
+  watchOptions: {
+    ignored: /node_modules/,
+  },
 };
